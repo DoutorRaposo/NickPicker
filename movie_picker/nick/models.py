@@ -14,7 +14,7 @@ class Title(models.Model):
 
     title = models.CharField(max_length=128, blank=True)
     overview = models.TextField(blank=True)
-    release_date = models.DateTimeField(null=True)
+    release_date = models.DateField(null=True)
     tmdb_id = models.IntegerField(null=True)
     genre = models.ManyToManyField("Genre", related_name="movies", blank=True)
     role = models.CharField(max_length=128, blank=True)

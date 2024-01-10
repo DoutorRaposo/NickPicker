@@ -61,7 +61,7 @@ def subscript_titles():
             if poster_path != "":
                 object.poster_path = poster_path
             for genre_id in genres:
-                genre = Genre.objects.get(tmdb_id=genre_id)
+                genre = Genre.objects.filter(tmdb_id=genre_id).first()
                 object.genre.add(genre)
             object.save()
 
@@ -77,7 +77,7 @@ def get_date(title):
 
     release_list = release_str.split("-")
     if release_list != [""]:
-        date = datetime.datetime(*map(int, release_list))
+        date = datetime.date(*map(int, release_list))
     else:
         date = ""
 
