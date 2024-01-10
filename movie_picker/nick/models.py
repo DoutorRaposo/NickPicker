@@ -31,10 +31,7 @@ class Title(models.Model):
 class Genre(models.Model):
     name = models.CharField(max_length=32)
     tmdb_id = models.IntegerField()
-    
+
 
     def __str__(self):
         return self.name
-    
-    def get_movies(self):
-        return ", ".join([x.title for x in self.movies.all()])
