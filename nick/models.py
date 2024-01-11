@@ -24,6 +24,7 @@ class Title(models.Model):
     keywords = models.ManyToManyField("Keyword", related_name="keywords", blank=True)
     companies = models.ManyToManyField("Company", related_name="companies", blank=True)
     director = models.ManyToManyField("Director", related_name="directed", blank=True)
+    certification = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
         return self.title

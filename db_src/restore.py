@@ -115,6 +115,10 @@ def subscript_titles():
                 for crewmember in title['credits']['crew']:
                     if crewmember['job'] == "Director":
                         object.director.add(Director.objects.get(tmdb_id=crewmember['id']))
+                for item in title['release_dates']['results']:
+                    if item["iso_3166_1"] == "US":
+                        certification = item["release_dates"][0]['certification']
+                        object.certification = certification
             if date != "":
                 object.release_date = date
             if poster_path != "":

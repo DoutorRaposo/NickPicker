@@ -37,7 +37,7 @@ def write_json(filename, data):
 def add_info(title):
     id = title["id"]
     if title["media_type"] == "movie":
-        url = f"https://api.themoviedb.org/3/movie/{id}?append_to_response=keywords%2Ccredits&language=en-US"
+        url = f"https://api.themoviedb.org/3/movie/{id}?append_to_response=keywords%2Ccredits%2Crelease_dates&language=en-US"
         data = get_data(url)
         title["budget"] = data["budget"]
         title["revenue"] = data["revenue"]
@@ -47,6 +47,7 @@ def add_info(title):
         title["production_companies"] = data["production_companies"]
         title["tagline"] = data["tagline"]
         title["credits"] = data["credits"]
+        title["release_dates"] = data["release_dates"]
         print(f'Extra info added for "{title["title"]}".')
     if title["media_type"] == "tv":
         url = f"https://api.themoviedb.org/3/tv/{id}?append_to_response=keywords&language=en-US"
