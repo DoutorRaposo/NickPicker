@@ -4,8 +4,8 @@ from .models import Title, Genre
 
 class TitleAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "release_date", "media_type", "credit_type", "role", "get_genres")
-    list_filter = ("credit_type", "media_type")
-    search_fields = ("title", "id", "media_type")
+    list_filter = ("credit_type", "media_type", "role")
+    search_fields = ("title", "id", "media_type", "role")
     filter_horizontal = ("genre",)
 
 class GenreAdmin(admin.ModelAdmin):

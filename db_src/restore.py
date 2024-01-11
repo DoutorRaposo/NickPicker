@@ -3,7 +3,7 @@ import datetime
 from nick.models import *
 
 
-def restore_db():
+def run():
     subscript_genres()
     print("Genres added")
     subscript_titles()
@@ -11,9 +11,9 @@ def restore_db():
 
 
 def subscript_genres():
-    with open("db_restore/genres_movie.json") as file:
+    with open("db_src/genres_movie.json") as file:
         data_movies = json.load(file)
-    with open("db_restore/genres_tv.json") as file:
+    with open("db_src/genres_tv.json") as file:
         data_tv = json.load(file)
     data_movies = data_movies["genres"]
     data_tv = data_tv["genres"]
@@ -26,7 +26,7 @@ def subscript_genres():
 
 
 def subscript_titles():
-    with open("db_restore/nic_cage_combined.json") as file:
+    with open("db_src/combined.json") as file:
         data = json.load(file)
 
     credits = data["combined_credits"]
