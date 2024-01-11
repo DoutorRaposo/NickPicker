@@ -11,11 +11,15 @@ This is my final project for CS50W
 
 remove debug=true
 
-from db_src import restore
-restore.run()
+from db_src.restore import restore_db
+restore_db()
 Also elaborate more on this script
 
-from db_src import create_json
-create_json.run()
+Run this from the Django's management shell to use the json files to create the database. Don't forget to run the necessary migrations if you deleted you database.
+
+from db_src.create_json import generate
+generate()
+
+Run this from the Django's management shell to download the json files from TMDB's API. You need to have your headers in API_headers.py to execute this. This process is long and you should only do it if you want to mess around with the project. You need your own API key to do this!
 
 remove admin?

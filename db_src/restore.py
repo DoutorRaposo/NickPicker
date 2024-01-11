@@ -3,7 +3,7 @@ import datetime
 from nick.models import *
 
 
-def run():
+def restore_db():
     subscript_genres()
     print("Genres added")
     subscript_titles()
@@ -45,11 +45,11 @@ def subscript_titles():
             overview = title["overview"]
             genres = title["genre_ids"]
             if role == "cast":
-                obj_role = title["character"]
-                credit_type = "ACT"
-            else:
+                obj_role = "Actor"
+                character = title["character"]
+            elif role == "crew":
                 obj_role = title["job"]
-                credit_type = "CRW"
+                character = ""
 
             if title["poster_path"]:
                 poster_path = (
@@ -64,8 +64,8 @@ def subscript_titles():
                 overview=overview,
                 tmdb_id=tmdb_id,
                 role=obj_role,
+                character=character,
                 media_type=media_type,
-                credit_type=credit_type,
             )
             if date != "":
                 object.release_date = date

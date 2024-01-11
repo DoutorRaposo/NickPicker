@@ -3,7 +3,7 @@ import json
 from .API_headers import headers
 
 
-def run():
+def generate():
     nic_id = 2963
     urls = {
         "genres_movie": "https://api.themoviedb.org/3/genre/movie/list?language=en",
