@@ -4,8 +4,16 @@ from nick.models import *
 
 
 def restore_db():
+    Genre.objects.all().delete()
+    Title.objects.all().delete()
+    Keyword.objects.all().delete()
+    Company.objects.all().delete()
+    print("Database cleared")
+
     subscript_genres()
     print("Genres added")
+    subscript_add_info()
+    print("Additional info added.")
     subscript_titles()
     print("Titles added")
 
@@ -17,13 +25,29 @@ def subscript_genres():
         data_tv = json.load(file)
     data_movies = data_movies["genres"]
     data_tv = data_tv["genres"]
-    new_dict = {}
     for item in data_tv:
         if item not in data_movies:
             data_movies.append(item)
     for genre in data_movies:
         Genre.objects.create(name=genre["name"], tmdb_id=genre["id"])
 
+def subscript_add_info():
+    with open("db_src/combined.json") as file:
+        data_keywords = json.load(file)
+
+    for role in data_keywords['combined_credits']:
+        for title in data_keywords['combined_credits'][role]:
+            if "production_companies" in title:
+                companies_list = list(title["production_companies"])
+                for company in companies_list:
+                    if not Company.objects.filter(tmdb_id=company["id"]).exists():
+                        Company.objects.create(tmdb_id=company['id'], name=company['name'])
+
+            keyword_list = list(title['keywords'].values())
+            if keyword_list[0]:
+                for keyword in keyword_list[0]:
+                    if not Keyword.objects.filter(tmdb_id=keyword["id"]).exists():
+                        Keyword.objects.create(tmdb_id=keyword['id'], name=keyword['name'])
 
 def subscript_titles():
     with open("db_src/combined.json") as file:
@@ -39,9 +63,10 @@ def subscript_titles():
             if media_type == "tv":
                 original_title = title["name"]
                 media_type = "TV"
-            else:
+            elif media_type == "movie":
                 original_title = title["title"]
                 media_type = "MV"
+
             overview = title["overview"]
             genres = title["genre_ids"]
             if role == "cast":
@@ -67,6 +92,17 @@ def subscript_titles():
                 character=character,
                 media_type=media_type,
             )
+
+            if media_type == "MV":
+                object.budget = title["budget"]
+                object.revenue = title['revenue']
+                object.runtime = title['runtime']
+                object.status = title['status']
+                object.tagline = title['tagline']
+                for keyword in title['keywords']['keywords']:
+                    object.keywords.add(Keyword.objects.get(tmdb_id=keyword['id']))
+                for company in title['production_companies']:
+                    object.companies.add(Company.objects.get(tmdb_id=company['id']))
             if date != "":
                 object.release_date = date
             if poster_path != "":
