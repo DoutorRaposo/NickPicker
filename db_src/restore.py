@@ -11,9 +11,9 @@ def run():
 
 
 def subscript_genres():
-    with open("scripts_json/genres_movie.json") as file:
+    with open("db_restore/genres_movie.json") as file:
         data_movies = json.load(file)
-    with open("scripts_json/genres_tv.json") as file:
+    with open("db_restore/genres_tv.json") as file:
         data_tv = json.load(file)
     data_movies = data_movies['genres']
     data_tv = data_tv['genres']
@@ -25,7 +25,7 @@ def subscript_genres():
         Genre.objects.create(name=genre['name'], tmdb_id=genre['id'])
 
 def subscript_titles():
-    with open("scripts_json/nic_cage_combined.json") as file:
+    with open("db_restore/nic_cage_combined.json") as file:
         data = json.load(file)
 
     credits = data["combined_credits"]
