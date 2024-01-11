@@ -8,6 +8,7 @@ def restore_db():
     Title.objects.all().delete()
     Keyword.objects.all().delete()
     Company.objects.all().delete()
+    Director.objects.all().delete()
     print("Database cleared")
 
     subscript_genres()
@@ -48,6 +49,14 @@ def subscript_add_info():
                 for keyword in keyword_list[0]:
                     if not Keyword.objects.filter(tmdb_id=keyword["id"]).exists():
                         Keyword.objects.create(tmdb_id=keyword['id'], name=keyword['name'])
+            if title['media_type'] == "movie":
+                if "crew" in title['credits']:
+                    for crewmember in title['credits']['crew']:
+                        if "job" in crewmember:
+                            if crewmember['job'] == "Director":
+                                if not Director.objects.filter(tmdb_id=crewmember["id"]).exists():
+                                    Director.objects.create(tmdb_id=crewmember['id'], name=crewmember['name']) 
+                            
 
 def subscript_titles():
     with open("db_src/combined.json") as file:
@@ -103,6 +112,9 @@ def subscript_titles():
                     object.keywords.add(Keyword.objects.get(tmdb_id=keyword['id']))
                 for company in title['production_companies']:
                     object.companies.add(Company.objects.get(tmdb_id=company['id']))
+                for crewmember in title['credits']['crew']:
+                    if crewmember['job'] == "Director":
+                        object.director.add(Director.objects.get(tmdb_id=crewmember['id']))
             if date != "":
                 object.release_date = date
             if poster_path != "":

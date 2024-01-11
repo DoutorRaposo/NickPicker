@@ -23,6 +23,7 @@ class Title(models.Model):
     tagline = models.CharField(max_length=128, blank=True)
     keywords = models.ManyToManyField("Keyword", related_name="keywords", blank=True)
     companies = models.ManyToManyField("Company", related_name="companies", blank=True)
+    director = models.ManyToManyField("Director", related_name="directed", blank=True)
 
     def __str__(self):
         return self.title
@@ -46,6 +47,13 @@ class Keyword(models.Model):
         return self.name
 
 class Company(models.Model):
+    tmdb_id = models.IntegerField()
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
+class Director(models.Model):
     tmdb_id = models.IntegerField()
     name = models.CharField(max_length=32)
 
