@@ -4,7 +4,7 @@ from django.db import models
 class Title(models.Model):
     MEDIA_TYPE_CHOICES = [
         ("MV", "Movie"),
-        ("TV", "TV"), 
+        ("TV", "TV"),
     ]
 
     title = models.CharField(max_length=128, blank=True)
@@ -28,17 +28,18 @@ class Title(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def get_genres(self):
         return ", ".join([x.name for x in self.genre.all()])
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=32)
     tmdb_id = models.IntegerField()
 
-
     def __str__(self):
         return self.name
+
 
 class Keyword(models.Model):
     tmdb_id = models.IntegerField()
@@ -47,12 +48,14 @@ class Keyword(models.Model):
     def __str__(self):
         return self.name
 
+
 class Company(models.Model):
     tmdb_id = models.IntegerField()
     name = models.CharField(max_length=32)
 
     def __str__(self):
         return self.name
+
 
 class Director(models.Model):
     tmdb_id = models.IntegerField()
