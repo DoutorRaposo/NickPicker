@@ -1,3 +1,7 @@
 __pycache__
 API_headers.py
 notes.txt
+/nick/static/package.json
+/nick/static/babel.config.json
+/nick/static/package-lock.json
+/nick/static/node_modules
