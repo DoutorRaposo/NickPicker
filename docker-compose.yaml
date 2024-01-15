@@ -1,0 +1,12 @@
+services:
+    db:
+        image: postgres
+
+    web:
+        build: .
+        volumes:
+            - .:/usr/src/app
+        ports:
+            - "8000:8000"
+        environment: 
+        - TMDB_API_KEY=$TMDB_API_KEY
