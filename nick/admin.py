@@ -10,7 +10,6 @@ class TitleAdmin(admin.ModelAdmin):
 
 class GenreAdmin(admin.ModelAdmin):
     list_display = ("name", "id", )
-    filter_horizontal = ("movies",)
 
 class KeywordAdmin(admin.ModelAdmin):
     list_display = ("name", "tmdb_id", 'get_titles')

@@ -1,6 +1,10 @@
 import requests
 import json
-from .API_headers import headers
+import os
+
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+
+headers = {"accept": "application/json", "Authorization": f"Bearer {TMDB_API_KEY}"}
 
 
 def generate():
