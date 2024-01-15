@@ -3,6 +3,7 @@ import datetime
 from nick.models import *
 
 
+
 def restore_db():
     Genre.objects.all().delete()
     Title.objects.all().delete()
