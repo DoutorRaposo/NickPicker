@@ -5,3 +5,5 @@ notes.txt
 /nick/static/babel.config.json
 /nick/static/package-lock.json
 /nick/static/node_modules
+docker-compose.yaml
+Dockerfile
