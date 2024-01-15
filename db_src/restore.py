@@ -3,7 +3,6 @@ import datetime
 from nick.models import *
 
 
-
 def restore_db():
     Genre.objects.all().delete()
     Title.objects.all().delete()
@@ -33,31 +32,41 @@ def subscript_genres():
     for genre in data_movies:
         Genre.objects.create(name=genre["name"], tmdb_id=genre["id"])
 
+
 def subscript_add_info():
     with open("db_src/combined.json") as file:
         data_keywords = json.load(file)
 
-    for role in data_keywords['combined_credits']:
-        for title in data_keywords['combined_credits'][role]:
+    for role in data_keywords["combined_credits"]:
+        for title in data_keywords["combined_credits"][role]:
             if "production_companies" in title:
                 companies_list = list(title["production_companies"])
                 for company in companies_list:
                     if not Company.objects.filter(tmdb_id=company["id"]).exists():
-                        Company.objects.create(tmdb_id=company['id'], name=company['name'])
+                        Company.objects.create(
+                            tmdb_id=company["id"], name=company["name"]
+                        )
 
-            keyword_list = list(title['keywords'].values())
+            keyword_list = list(title["keywords"].values())
             if keyword_list[0]:
                 for keyword in keyword_list[0]:
                     if not Keyword.objects.filter(tmdb_id=keyword["id"]).exists():
-                        Keyword.objects.create(tmdb_id=keyword['id'], name=keyword['name'])
-            if title['media_type'] == "movie":
-                if "crew" in title['credits']:
-                    for crewmember in title['credits']['crew']:
+                        Keyword.objects.create(
+                            tmdb_id=keyword["id"], name=keyword["name"]
+                        )
+            if title["media_type"] == "movie":
+                if "crew" in title["credits"]:
+                    for crewmember in title["credits"]["crew"]:
                         if "job" in crewmember:
-                            if crewmember['job'] == "Director":
-                                if not Director.objects.filter(tmdb_id=crewmember["id"]).exists():
-                                    Director.objects.create(tmdb_id=crewmember['id'], name=crewmember['name']) 
-                            
+                            if crewmember["job"] == "Director":
+                                if not Director.objects.filter(
+                                    tmdb_id=crewmember["id"]
+                                ).exists():
+                                    Director.objects.create(
+                                        tmdb_id=crewmember["id"],
+                                        name=crewmember["name"],
+                                    )
+
 
 def subscript_titles():
     with open("db_src/combined.json") as file:
@@ -105,20 +114,22 @@ def subscript_titles():
 
             if media_type == "MV":
                 object.budget = title["budget"]
-                object.revenue = title['revenue']
-                object.runtime = title['runtime']
-                object.status = title['status']
-                object.tagline = title['tagline']
-                for keyword in title['keywords']['keywords']:
-                    object.keywords.add(Keyword.objects.get(tmdb_id=keyword['id']))
-                for company in title['production_companies']:
-                    object.companies.add(Company.objects.get(tmdb_id=company['id']))
-                for crewmember in title['credits']['crew']:
-                    if crewmember['job'] == "Director":
-                        object.director.add(Director.objects.get(tmdb_id=crewmember['id']))
-                for item in title['release_dates']['results']:
+                object.revenue = title["revenue"]
+                object.runtime = title["runtime"]
+                object.status = title["status"]
+                object.tagline = title["tagline"]
+                for keyword in title["keywords"]["keywords"]:
+                    object.keywords.add(Keyword.objects.get(tmdb_id=keyword["id"]))
+                for company in title["production_companies"]:
+                    object.companies.add(Company.objects.get(tmdb_id=company["id"]))
+                for crewmember in title["credits"]["crew"]:
+                    if crewmember["job"] == "Director":
+                        object.director.add(
+                            Director.objects.get(tmdb_id=crewmember["id"])
+                        )
+                for item in title["release_dates"]["results"]:
                     if item["iso_3166_1"] == "US":
-                        certification = item["release_dates"][0]['certification']
+                        certification = item["release_dates"][0]["certification"]
                         object.certification = certification
             if date != "":
                 object.release_date = date
