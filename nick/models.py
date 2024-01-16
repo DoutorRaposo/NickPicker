@@ -31,9 +31,6 @@ class Title(models.Model):
     def __str__(self):
         return self.title
 
-    def get_genres(self):
-        return ", ".join([x.name for x in self.genre.all()])
-
 
 class Genre(models.Model):
     name = models.CharField(max_length=32, verbose_name="genre")
