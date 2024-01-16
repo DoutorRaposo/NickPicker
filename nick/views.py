@@ -11,6 +11,6 @@ def index(request):
 # Valid titles are Released titles that are Movies with Nic Cage as an Actor
 # Another viewser maybe will be required for the Trivia Section
 class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all().filter(media_type="MV").filter(role="Actor").filter(status="Released").order_by("-release_date")
+    queryset = Title.objects.all().filter(media_type="MV").filter(role__startswith="Actor").filter(status="Released").filter(vote_average__gte=2.1).order_by("-release_date")
     serializer_class = TitleSerializer
     http_method_names = ['get']

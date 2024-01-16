@@ -89,8 +89,13 @@ def subscript_titles():
             overview = title["overview"]
             genres = title["genre_ids"]
             if role == "cast":
-                obj_role = "Actor"
                 character = title["character"]
+                if "self".casefold() in title['character'].casefold():
+                    obj_role = "Self"
+                elif "(voice)".casefold() in title['character'].casefold():
+                    obj_role = "Actor (voice)"
+                else:
+                    obj_role = "Actor"
             elif role == "crew":
                 obj_role = title["job"]
                 character = ""
@@ -118,6 +123,7 @@ def subscript_titles():
                 object.runtime = title["runtime"]
                 object.status = title["status"]
                 object.tagline = title["tagline"]
+                object.vote_average = title["vote_average"]
                 for keyword in title["keywords"]["keywords"]:
                     object.keywords.add(Keyword.objects.get(tmdb_id=keyword["id"]))
                 for company in title["production_companies"]:

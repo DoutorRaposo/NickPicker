@@ -25,6 +25,7 @@ class Title(models.Model):
     companies = models.ManyToManyField("Company", related_name="companies", blank=True)
     director = models.ManyToManyField("Director", related_name="directed", blank=True)
     certification = models.CharField(max_length=16, blank=True)
+    vote_average = models.FloatField(null=True)
 
     def __str__(self):
         return self.title
@@ -34,7 +35,7 @@ class Title(models.Model):
 
 
 class Genre(models.Model):
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32, verbose_name="genre")
     tmdb_id = models.IntegerField()
 
     def __str__(self):
@@ -52,6 +53,9 @@ class Keyword(models.Model):
 class Company(models.Model):
     tmdb_id = models.IntegerField()
     name = models.CharField(max_length=32)
+
+    class Meta:
+        verbose_name_plural = 'companies'
 
     def __str__(self):
         return self.name

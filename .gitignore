@@ -5,3 +5,4 @@ __pycache__
 /nick/static/node_modules
 docker-compose.yaml
 Dockerfile
+jsconfig.json

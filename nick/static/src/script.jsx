@@ -1,3 +1,5 @@
+'use strict';
+
 function App() {
 
     const [count, setCount] = React.useState(0);
@@ -15,4 +17,5 @@ function App() {
 }
 
 
+// @ts-ignore
 document.addEventListener("DOMContentLoaded", () => ReactDOM.render(<App />, document.querySelector("#app")));
