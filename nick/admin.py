@@ -3,8 +3,8 @@ from .models import *
 
 
 class TitleAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "status","release_date", "media_type", "role", "get_genres", "vote_average")
-    list_filter = ("media_type", "role", "status", "genre__name")
+    list_display = ("id", "title", "status", "role_type","release_date", "media_type", "role", "get_genres", "vote_average")
+    list_filter = ("media_type", "role_type", "role", "status", "genre__name")
     search_fields = ("title", "id", "media_type", "role", "genre__name")
     filter_horizontal = ("genre", "keywords", "companies", "director")
 

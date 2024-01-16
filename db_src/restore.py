@@ -92,13 +92,17 @@ def subscript_titles():
                 character = title["character"]
                 if "self".casefold() in title['character'].casefold():
                     obj_role = "Self"
+                    obj_role_type = "Cast as Self"
                 elif "(voice)".casefold() in title['character'].casefold():
                     obj_role = "Actor (voice)"
+                    obj_role_type = "Cast"
                 else:
                     obj_role = "Actor"
+                    obj_role_type = "Cast"
             elif role == "crew":
                 obj_role = title["job"]
                 character = ""
+                obj_role_type = "Crew"
 
             if title["poster_path"]:
                 poster_path = (
@@ -115,6 +119,7 @@ def subscript_titles():
                 role=obj_role,
                 character=character,
                 media_type=media_type,
+                role_type=obj_role_type
             )
 
             if media_type == "MV":

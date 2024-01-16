@@ -26,6 +26,7 @@ class Title(models.Model):
     director = models.ManyToManyField("Director", related_name="directed", blank=True)
     certification = models.CharField(max_length=16, blank=True)
     vote_average = models.FloatField(null=True)
+    role_type = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
         return self.title
