@@ -21,10 +21,8 @@ class TitleAdmin(admin.ModelAdmin):
 
 
 class GenreAdmin(admin.ModelAdmin):
-    list_display = (
-        "name",
-        "id",
-    )
+    list_display = ("name", "id", "movies_list")
+    list_filter = ("movies__genre", "movies__media_type", "movies__status")
 
 
 class KeywordAdmin(admin.ModelAdmin):

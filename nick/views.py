@@ -38,14 +38,7 @@ class TitleValidViewSet(viewsets.ModelViewSet):
 
 # Ambas funcionam, mas qual usar? talvez a função use para search.
 def title_list(request):
-    queryset = (
-        Title.objects.all()
-        .filter(media_type="MV")
-        .filter(role_type="Cast")
-        .filter(status="Released")
-        .filter(vote_average__gte=2.1)
-        .order_by("-release_date")
-    )
+    queryset = Title.valid()
     serializer = TitleSerializer(queryset, many=True, context={"request": request})
     print(request.GET.get("q", "teste"))
     return JsonResponse(serializer.data, safe=False)

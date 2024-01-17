@@ -34,6 +34,18 @@ class Title(models.Model):
     def genres_list(self):
         return ", ".join([g.name for g in self.genre.all()])
 
+    def valid():
+        return (
+            Title.objects.all()
+            .filter(
+                media_type="MV",
+                role_type="Cast",
+                status="Released",
+                vote_average__gte=2.1,
+            )
+            .order_by("-release_date")
+        )
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=32, verbose_name="genre")
@@ -41,6 +53,22 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+    def movies_list(self):
+        return ", ".join([g.title for g in self.movies.all()])
+
+    def valid():
+        return (
+            Genre.objects.filter(
+                movies__isnull=False,
+                movies__media_type="MV",
+                movies__role_type__icontains="Cast",
+                movies__status__icontains="Released",
+                movies__vote_average__gte=2.1,
+            )
+            .distinct()
+            .order_by("name")
+        )
 
 
 class Keyword(models.Model):
