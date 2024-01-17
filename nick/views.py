@@ -5,6 +5,8 @@ from .serializers import *
 
 from django.http import HttpResponse, JsonResponse
 
+# Install CORS?
+
 # Create your views here.
 def index(request):
     return render(request, "nick/index.html")
