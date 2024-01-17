@@ -32,5 +32,5 @@ class TitleSerializer(serializers.HyperlinkedModelSerializer):
         model = Title
         fields = '__all__'
 
-
+# ModelSerializer apresenta id mas não vem com URL pro objeto. Qual usar? 
 
