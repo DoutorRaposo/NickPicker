@@ -90,10 +90,10 @@ def subscript_titles():
             genres = title["genre_ids"]
             if role == "cast":
                 character = title["character"]
-                if "self".casefold() in title['character'].casefold():
+                if "self".casefold() in title["character"].casefold():
                     obj_role = "Self"
                     obj_role_type = "Cast as Self"
-                elif "(voice)".casefold() in title['character'].casefold():
+                elif "(voice)".casefold() in title["character"].casefold():
                     obj_role = "Actor (voice)"
                     obj_role_type = "Cast"
                 else:
@@ -119,7 +119,7 @@ def subscript_titles():
                 role=obj_role,
                 character=character,
                 media_type=media_type,
-                role_type=obj_role_type
+                role_type=obj_role_type,
             )
 
             if media_type == "MV":
@@ -149,6 +149,12 @@ def subscript_titles():
             for genre_id in genres:
                 genre = Genre.objects.filter(tmdb_id=genre_id).first()
                 object.genre.add(genre)
+                if genre == Genre.objects.filter(name="Documentary").first():
+                    if (
+                        "cast".casefold() in object.role_type.casefold()
+                        or "cast as self".casefold() in object.role_type.casefold()
+                    ):
+                        object.role_type += " (documentary)"
             object.save()
 
 

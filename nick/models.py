@@ -31,6 +31,9 @@ class Title(models.Model):
     def __str__(self):
         return self.title
 
+    def genres_list(self):
+        return ", ".join([g.name for g in self.genre.all()])
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=32, verbose_name="genre")
@@ -53,7 +56,7 @@ class Company(models.Model):
     name = models.CharField(max_length=32)
 
     class Meta:
-        verbose_name_plural = 'companies'
+        verbose_name_plural = "companies"
 
     def __str__(self):
         return self.name

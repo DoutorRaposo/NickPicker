@@ -1,9 +1,10 @@
 import requests
 import json
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
-
 headers = {"accept": "application/json", "Authorization": f"Bearer {TMDB_API_KEY}"}
 
 
