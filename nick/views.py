@@ -2,11 +2,11 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
-
 from django.http import HttpResponse, JsonResponse
 
 # Install CORS?
-
+#???
+valid_genres = (Genre.valid())
 
 # Create your views here.
 def index(request):
@@ -24,14 +24,7 @@ class TitleViewSet(viewsets.ModelViewSet):
 
 # We have to create separate jsons for the serializer url to work?
 class TitleValidViewSet(viewsets.ModelViewSet):
-    queryset = (
-        Title.objects.all()
-        .filter(media_type="MV")
-        .filter(role_type="Cast")
-        .filter(status="Released")
-        .filter(vote_average__gte=2.1)
-        .order_by("-release_date")
-    )
+    queryset = Title.valid()
     serializer_class = TitleSerializer
     http_method_names = ["get"]
 
