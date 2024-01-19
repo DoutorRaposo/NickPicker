@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function handleMobileMenu() {
   const element = document.querySelector("#mobile-dropdown");
   if (element.className === "dropdown") {
-    element.className += " responsive";
+    element.className += " show";
   } else {
     element.className = "dropdown";
   }
