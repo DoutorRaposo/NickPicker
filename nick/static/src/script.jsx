@@ -25,13 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function handleMobileMenu() {
-        const element = document.querySelector("#mobile-dropdown")
-        if (element.className === "dropdown")
-        {
-            element.className += " responsive";
-        }
-        else
-        {
-            element.className = "dropdown";
-        }
+    const element = document.querySelector("#mobile-dropdown");
+    if (element.className === "dropdown") {
+      element.className += " show";
+    } else {
+      element.className = "dropdown";
     }
+  }
