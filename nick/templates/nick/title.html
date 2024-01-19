@@ -2,7 +2,30 @@
 
 {% block body %}
 
-<div class="spacer-block"></div>
-<span>{{ movie }}</span>
+
+<div class="info-container">
+<div class="info-wrapper" style="background-image: url('{{ movie.poster_path }}');">
+    <div class="info-header">
+        <span>{{ movie.title }}</span>
+        <span>Tagline: {{ movie.tagline }}</span>
+        <span>Released: {{ movie.release_date }}</span>
+        <span>Runtime: {{ movie.runtime }}</span>
+    </div>
+    <div class="info-content">
+        <span>Overview: {{ movie.overview }}</span>
+
+        <span>Genres: {% for genre in movie.genre.all %}{% if forloop.last %} {{ genre }}. {% else %} {{ genre }}, {%endif%} {% endfor %}</span>
+        <span>Nicolas Cage as {{ movie.character }}</span>
+        <span>Budget: {{ movie.budget }}</span>
+        <span>Revenue: {{ movie.revenue }}</span>
+        <span>Runtime: {{ movie.runtime }}</span>
+
+        <span>Director: {{ movie.director }}</span>
+        <span>Cast: {{ movie.cast_members }}</span>
+    </div>
+</div>
+</div>
+
+
 
 {% endblock %}

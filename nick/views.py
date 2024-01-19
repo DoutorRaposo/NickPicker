@@ -16,11 +16,14 @@ def index(request):
 def get_movies(request, genre=None):
     if genre == None:
         queryset = Title.valid()
+        title = "Movies by Cage"
 
     else:
-        queryset = Title.valid().filter(genre__name__icontains=genre)
+        genre_model = Genre.valid().get(name__icontains=genre)
+        queryset = Title.valid().filter(genre__id=genre_model.id)
+        title = genre_model.name
 
-    return render(request, "nick/movies_set.html", context={"movies": queryset})
+    return render(request, "nick/movies_set.html", context={"movies": queryset, "title": title})
 
 
 def get_title(request, id):
@@ -38,6 +41,7 @@ def search(request):
         | Q(tagline__icontains=query)
         | Q(director__name__icontains=query)
         | Q(character__icontains=query)
+        | Q(cast_members__icontains=query)
     )
     queryset = queryset.distinct()
     return render(request, "nick/movies_set.html", context={"movies": queryset})

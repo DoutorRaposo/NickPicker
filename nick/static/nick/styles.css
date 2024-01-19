@@ -57,7 +57,7 @@ h1 {
     row-gap: 30px;
     justify-content: center;
 
-    margin: 200px 50px 100px 50px;
+    margin: 50px 50px 100px 50px;
 
     img {
         height: auto;
@@ -69,8 +69,19 @@ h1 {
 
 .movie-wrapper {
     max-width: 200px;
+
 }
 
+.page-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+
+    & span {
+        font-size: 50px;
+    }
+}
 
 /* Editings to bootstrap navbar */
 
@@ -81,6 +92,7 @@ h1 {
     border-color: white;
     border-bottom: 1px solid white;
     box-shadow: 0 0 10px 2px #909090;
+    min-height: 8vh;
 }
 
 .navbar>.container-fluid {
@@ -101,6 +113,12 @@ h1 {
 }
 
 @media only screen and (max-width: 990px) {
+    .navbar-dark .navbar-nav .nav-link {
+        font-size: 2rem !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
     .navbar-dark .navbar-nav .nav-link {
         font-size: 3rem !important;
     }
@@ -192,21 +210,21 @@ div>.navbar-collapse.collapsing {
             border-color: white;
             border-bottom: 4px solid white;
         }
-    
+
         form {
             margin-top: 20px;
         }
     }
-    
-    
-    
+
+
+
     div>.navbar-collapse.collapsing {
-    
+
         .nav-item {
             border-color: white;
             border-bottom: 4px solid white;
         }
-    
+
         form {
             margin-top: 20px;
         }
@@ -218,3 +236,17 @@ div>.navbar-collapse.collapsing {
     border-color: white !important;
 }
 
+.info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 100px 0;
+}
+
+.info-wrapper {
+    max-width: 800px;
+}
+
+.info-content {
+    background-color: rgba(0, 0, 0, 0.75);
+}

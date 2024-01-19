@@ -138,6 +138,8 @@ def subscript_titles():
                         object.director.add(
                             Director.objects.get(tmdb_id=crewmember["id"])
                         )
+                for cast_member in title['credits']['cast']:
+                    object.cast_members += cast_member['name'] + ", "
                 for item in title["release_dates"]["results"]:
                     if item["iso_3166_1"] == "US":
                         certification = item["release_dates"][0]["certification"]
