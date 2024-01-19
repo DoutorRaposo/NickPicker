@@ -9,4 +9,15 @@ function App() {
     onClick: updateCount
   }, "Count"));
 }
-document.addEventListener("DOMContentLoaded", () => ReactDOM.render(React.createElement(App, null), document.querySelector("#app")));
+document.addEventListener("DOMContentLoaded", () => {
+  ReactDOM.render(React.createElement(App, null), document.querySelector("#app"));
+  document.querySelector(".navbar-mobile-button").addEventListener('click', handleMobileMenu);
+});
+function handleMobileMenu() {
+  const element = document.querySelector("#mobile-dropdown");
+  if (element.className === "dropdown") {
+    element.className += " responsive";
+  } else {
+    element.className = "dropdown";
+  }
+}

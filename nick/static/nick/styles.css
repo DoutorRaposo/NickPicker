@@ -1,13 +1,80 @@
+@keyframes grow {
+    from {
+        overflow: hidden;
+        opacity: 0;
+        height: 0;
+    }
+
+    to {
+        overflow: auto;
+        opacity: 1;
+        height: 205px;
+    }
+}
+
+
 body {
     background-image: url(images/Mobile-1.jpg);
     background-size: contain;
     background-attachment: fixed;
     background-position: center center;
-    height: 100%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: white;
 }
 
 h1 {
     color: white;
+}
+
+.navbar-mobile-button {
+    display: none;
+}
+
+.dropdown {
+    display: none;
+}
+
+.dropdown.responsive {
+    animation-name: grow;
+    animation-duration: 400ms;
+    animation-fill-mode: forwards;
+    display: block;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    left: 0%;
+    background-color: rgba(24, 24, 24, 0.8);
+
+    & li {
+        border-bottom: solid 1px;
+
+        & a {
+            display: block;
+            position: relative;
+            padding: 12px 0;
+            margin: 0 25px;
+        }
+    }
+}
+
+@media only screen and (min-width:767px) {
+    body {
+        background-image: url(images/Tablet-1.jpg);
+    }
+
+    h1 {
+        color: blue;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    body {
+        background-image: url(images/Desktop-1.jpg);
+    }
+
+    h1 {
+        color: red;
+    }
 }
 
 #overlay {
@@ -24,22 +91,78 @@ h1 {
     z-index: -1;
 }
 
-@media only screen and (min-device-width:700px) {
-    body {
-        background-image: url(images/Tablet-1.jpg);
-    }
+header {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(24, 24, 24, 0.8);
+    border-bottom: solid 1px;
+    border-color: white;
+    box-shadow: 0 0 10px 2px #909090;
 
-    h1 {
-        color: blue;
-    }
 }
 
-@media only screen and (min-device-width: 1000px) {
-    body {
-        background-image: url(images/Desktop-1.jpg);
+#header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1200px;
+    max-width: 90%;
+    margin: 0 auto;
+
+    & ul.navbar-links {
+        width: 600px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        li {
+            float: left;
+            padding: 0 2%;
+        }
     }
 
-    h1 {
-        color: red;
+    & .navbar-text {
+        font-size: 1rem;
+        letter-spacing: 0.075rem;
+        font-weight: bold;
+        color: white;
     }
+
+
+    @media screen and (max-width:1024px) {
+        & div.navbar-desktop-wrapper {
+            display: none;
+        }
+
+        & div.navbar-mobile-button {
+            display: block;
+            color: white;
+        }
+    }
+
+    /*placeholder*/
+
+    .icon {
+        font-size: 2rem;
+    }
+
+    .navbar-icon {
+        font-size: 2.5rem;
+        color: white;
+        font-weight: bolder;
+
+
+    }
+
+    .navbar-icon-div {
+        margin: 15px 0;
+    }
+
+
+    /*placeholder*/
+}
+
+
+.spacer-block {
+    height: 300px;
 }
