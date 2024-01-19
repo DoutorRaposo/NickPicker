@@ -107,9 +107,8 @@ div>.navbar-collapse.collapsing {
     }
 }
 
-/* Changes to the genre dropdown */
-
-.dropdown-menu.custom {
+/* Changes to the genre dropdown only on collapsed navbar */
+.navbar-collapse.collapse.show .dropdown-menu.custom {
     background-color: transparent;
     padding: .25rem 0rem;
     .dropdown-item {
