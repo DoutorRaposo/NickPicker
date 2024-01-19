@@ -3,14 +3,44 @@ from rest_framework import viewsets
 from .models import *
 from .serializers import *
 from django.http import HttpResponse, JsonResponse
+from django.db.models import Q
 
 # Install CORS?
-#???
-valid_genres = (Genre.valid())
+
 
 # Create your views here.
 def index(request):
     return render(request, "nick/index.html")
+
+
+def get_movies(request, genre=None):
+    if genre == None:
+        queryset = Title.valid()
+
+    else:
+        queryset = Title.valid().filter(genre__name__icontains=genre)
+
+    return render(request, "nick/movies_set.html", context={"movies": queryset})
+
+
+def get_title(request, id):
+    movie = Title.objects.get(pk=id)
+    return render(request, "nick/title.html", context={"movie": movie})
+
+
+def search(request):
+    query = request.GET.get("q", "")
+    queryset = Title.valid().filter(
+        Q(title__icontains=query)
+        | Q(genre__name__icontains=query)
+        | Q(keywords__name__icontains=query)
+        | Q(overview__icontains=query)
+        | Q(tagline__icontains=query)
+        | Q(director__name__icontains=query)
+        | Q(character__icontains=query)
+    )
+    queryset = queryset.distinct()
+    return render(request, "nick/movies_set.html", context={"movies": queryset})
 
 
 # This viewset is for the API to return all the valid titles at /api/titles

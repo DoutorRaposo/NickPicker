@@ -22,7 +22,7 @@
     <div id="overlay">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><img
+                <a class="navbar-brand" href="/"><img
                     src="{% static 'nick/favicon.ico' %}" alt="" width="30" height="24"
                     class="d-inline-block align-text-top"><span class="navbar-text">Nick Picker Big URL</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -33,13 +33,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Trivia</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Titles</a>
+                            <a class="nav-link active" href="/movies">Movies</a>
                         </li>
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -47,14 +47,14 @@
                                 Genres
                             </a>
                             <ul class="dropdown-menu custom" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                {% for genre in genres %}
+                                <li><a class="dropdown-item" href="/genres/{{ genre.name|lower }}">{{ genre.name }}</a></li>
+                                {% endfor %}
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex" action="/search">
+                        <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>

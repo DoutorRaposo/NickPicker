@@ -1,0 +1,16 @@
+{% extends "nick/layout.html" %}
+
+{% block body %}
+
+<div class="titles-wrapper">
+{% for movie in movies %}
+
+<div class="movie-wrapper">
+<img src={% if movie.poster_path == "" %}{% load static %}"{% static 'nick/images/no-poster.png' %}"{% else %}"{{ movie.poster_path }}"{% endif %} alt="">
+<div><a href="/movies/{{ movie.id }}">{{ movie.title }}</a></div>
+</div>
+
+{% endfor %}
+</div>
+
+{% endblock %}

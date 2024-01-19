@@ -39,7 +39,7 @@ class Title(models.Model):
             Title.objects.all()
             .filter(
                 media_type="MV",
-                role_type="Cast",
+                role_type__icontains="Cast",
                 status="Released",
                 vote_average__gte=2.1,
             )
