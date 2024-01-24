@@ -44,7 +44,7 @@ def search(request):
         | Q(cast_members__icontains=query)
     )
     queryset = queryset.distinct()
-    return render(request, "nick/movies_set.html", context={"movies": queryset})
+    return render(request, "nick/movies_set.html", context={"movies": queryset, "title": f'Results for "{query}"'})
 
 
 # This viewset is for the API to return all the valid titles at /api/titles

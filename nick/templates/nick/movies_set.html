@@ -8,7 +8,7 @@
 {% for movie in movies %}
 
 <div class="movie-wrapper">
-<img src={% if movie.poster_path == "" %}{% load static %}"{% static 'nick/images/no-poster.png' %}"{% else %}"{{ movie.poster_path }}"{% endif %} alt="">
+<img src="{% if movie.poster_path == '' %}{% load static %}{% static 'nick/images/no-poster.png' %}{% else %}{{ movie.poster_path }}{% endif %}" alt="Poster for {{ movie.title }}">
 <div><a href="/movies/{{ movie.id }}">{{ movie.title }}</a></div>
 </div>
 

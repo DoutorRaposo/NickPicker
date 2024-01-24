@@ -3,9 +3,12 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nick Picker</title>
     <link href="{% static 'nick/reset.css' %}" rel="stylesheet">
     <link href="{% static 'nick/styles.css' %}" rel="stylesheet">
+    <link href="{% static 'nick/navbar-alterations.css' %}" rel="stylesheet">
     <link rel="icon" href="{% static 'nick/favicon.ico' %}">
     <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
@@ -22,7 +25,7 @@
     <div id="overlay">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><img
+                <a class="navbar-brand" href="{% url 'index' %}"><img
                     src="{% static 'nick/favicon.ico' %}" alt="" width="30" height="24"
                     class="d-inline-block align-text-top"><span class="navbar-text">Nick Picker Big URL</span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -33,13 +36,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Trivia</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/movies">Movies</a>
+                            <a class="nav-link active" href="{% url 'get_movies' %}">Movies</a>
                         </li>
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -48,19 +51,18 @@
                             </a>
                             <ul class="dropdown-menu custom" aria-labelledby="navbarDropdown">
                                 {% for genre in genres %}
-                                <li><a class="dropdown-item" href="/genres/{{ genre.name|lower }}">{{ genre.name }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'get_movies_by_genre' genre.name|lower %}">{{ genre.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex" action="/search">
+                    <form class="d-flex" action="{% url 'search' %}">
                         <input class="form-control me-2" name="q" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
             </div>
         </nav>
-
         {% block body %}
         {% endblock %}
     </div>
