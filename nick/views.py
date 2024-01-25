@@ -5,10 +5,6 @@ from .serializers import *
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 
-# Install CORS?
-
-
-# Create your views here.
 def index(request):
     return render(request, "nick/index.html")
 
@@ -46,6 +42,7 @@ def search(request):
     queryset = queryset.distinct()
     return render(request, "nick/movies_set.html", context={"movies": queryset, "title": f'Results for "{query}"'})
 
+# Install CORS?
 
 # This viewset is for the API to return all the valid titles at /api/titles
 # Valid titles are Released titles that are Movies with Nic Cage as an Actor
