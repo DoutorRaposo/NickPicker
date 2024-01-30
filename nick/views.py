@@ -4,6 +4,11 @@ from .models import *
 from .serializers import *
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
+import random
+from django.shortcuts import redirect
+from django.core.paginator import Paginator
+
 
 def index(request):
     return render(request, "nick/index.html")
@@ -15,16 +20,27 @@ def get_movies(request, genre=None):
         title = "Movies by Cage"
 
     else:
-        genre_model = Genre.valid().get(name__icontains=genre)
+        genre_model = get_object_or_404(Genre.valid(), name__icontains=genre)
         queryset = Title.valid().filter(genre__id=genre_model.id)
         title = genre_model.name
-
-    return render(request, "nick/movies_set.html", context={"movies": queryset, "title": title})
+    
+    paginator = Paginator(queryset, 15)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(
+        request, "nick/movies_set.html", context={"movies": page_obj, "title": title}
+    )
 
 
 def get_title(request, id):
     movie = Title.objects.get(pk=id)
     return render(request, "nick/title.html", context={"movie": movie})
+
+
+def random_title(request):
+    titles = list(Title.valid())
+    random_title = random.choice(titles)
+    return redirect("get_single_movie", id=random_title.id)
 
 
 def search(request):
@@ -40,9 +56,15 @@ def search(request):
         | Q(cast_members__icontains=query)
     )
     queryset = queryset.distinct()
-    return render(request, "nick/movies_set.html", context={"movies": queryset, "title": f'Results for "{query}"'})
+    return render(
+        request,
+        "nick/movies_set.html",
+        context={"movies": queryset, "title": f'Results for "{query}"'},
+    )
+
 
 # Install CORS?
+
 
 # This viewset is for the API to return all the valid titles at /api/titles
 # Valid titles are Released titles that are Movies with Nic Cage as an Actor

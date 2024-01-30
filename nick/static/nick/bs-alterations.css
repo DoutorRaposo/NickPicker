@@ -1,5 +1,25 @@
 /* Editings to bootstrap navbar */
 
+/*
+Changes to dropdown menu when navbar isn't collapsed
+*/
+
+.navbar.navbar-expand-lg.navbar-dark .collapse.navbar-collapse .navbar-nav.ms-auto.mb-lg-0 .dropdown-menu.custom.show {
+    @media only screen and (min-width: 992px) {
+        background-color: rgba(49, 49, 49, 0.75);
+    }
+
+    .dropdown-item {
+        color: white;
+    }
+
+    .dropdown-item:hover {
+        color: black;
+    }
+
+
+}
+
 /* Margins and background color for whole nav */
 .navbar.navbar-expand-lg {
     padding: 1.5rem 0;
@@ -164,4 +184,35 @@ div>.navbar-collapse.collapsing {
 
 .info-content {
     background-color: rgba(0, 0, 0, 0.75);
+}
+/* Change to the pagination bootstrap */
+.pagination .page-item.active .page-link {
+
+    background-color: black;
+    border-color: black;
+    color: white;
+}
+
+.pagination .page-item .page-link {
+
+    background-color: white;
+    border-color: black;
+    color: black;
+}
+
+/* Search bar*/
+
+.btn.btn-outline-success {
+    color: white;
+    background-color: black;
+    border-color: black;
+}
+.btn.btn-outline-success:hover {
+    color: black;
+    background-color: white;
+    border-color: white;
+}
+
+.form-control.me-2:focus {
+    box-shadow: 0 0 10px 2px #909090;
 }

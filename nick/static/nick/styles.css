@@ -57,12 +57,19 @@ h1 {
     row-gap: 30px;
     justify-content: center;
 
-    margin: 50px 50px 100px 50px;
+    margin: 50px 50px 50px 50px;
 
     & img {
         height: auto;
 
         max-width: 100%;
+
+        border-color: white;
+        border: 2px solid;
+    }
+
+    & img:hover {
+        box-shadow: 0 0 10px 2px #909090;
     }
 
 }
@@ -76,9 +83,24 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100px;
+    height: 120px;
 
     & span {
         font-size: 50px;
     }
+}
+
+.movie-wrapper .movie-wrapper__anchor {
+    color: white;
+    text-decoration-color: white;
+}
+
+.movie-wrapper .movie-wrapper__anchor .movie-wrapper__anchor__text {
+    margin-top: 5px;
+}
+
+.pagination-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
