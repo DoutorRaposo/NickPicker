@@ -11,10 +11,12 @@ Changes to dropdown menu when navbar isn't collapsed
 
     .dropdown-item {
         color: white;
+        text-transform: none;
     }
 
     .dropdown-item:hover {
         color: black;
+        text-transform: none;
     }
 
 
@@ -28,6 +30,9 @@ Changes to dropdown menu when navbar isn't collapsed
     border-bottom: 1px solid white;
     box-shadow: 0 0 10px 2px #909090;
     min-height: 8vh;
+    text-transform: uppercase;
+    font-family: Tahoma, sans-serif;
+    font-weight: bold;
 }
 
 .navbar>.container-fluid {
@@ -37,13 +42,11 @@ Changes to dropdown menu when navbar isn't collapsed
 
 /* Changing font from navbar */
 .navbar-dark .navbar-text {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white !important;
     margin-left: 10px;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: white !important;
 }
 
@@ -68,6 +71,7 @@ Changes to dropdown menu when navbar isn't collapsed
         color: white;
         font-size: smaller;
         padding: 0.5rem 2rem;
+
     }
 
     a:hover {
@@ -96,7 +100,7 @@ Changes to dropdown menu when navbar isn't collapsed
         }
 
         a:hover {
-            background-color: transparent;
+            background-color: white;
         }
 
         li:first-child {
@@ -171,20 +175,6 @@ div>.navbar-collapse.collapsing {
     border-color: white !important;
 }
 
-.info-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 100px 0;
-}
-
-.info-wrapper {
-    max-width: 800px;
-}
-
-.info-content {
-    background-color: rgba(0, 0, 0, 0.75);
-}
 /* Change to the pagination bootstrap */
 .pagination .page-item.active .page-link {
 
