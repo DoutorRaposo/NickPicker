@@ -1,40 +1,67 @@
 {% extends "nick/layout.html" %}
+{% load nick_tags %}
 
 {% block body %}
 
-
-<div class="info-container">
-    <div class="info-wrapper">
-        <div class="info-header">
-            <div class="info-header__image">
-            <img src="{{ movie.poster_path }}">
-        </div>
-            <div class="info-header__content">
-            <span class="info-header__title">{{ movie.title }}</span>
-            <span class="info-header__tagline">{{ movie.tagline }}</span>
-            <span class="info-header__genres">{% for genre in movie.genre.all %}<a href="{% url 'get_movies_by_genre' genre|lower %}">{% if forloop.last %} {{ genre }} {% else %} {{ genre }},
-                {%endif%}</a>{% endfor %}</span>
-            <span>Nicolas Cage as: {{ movie.character }}</span>
-            <span>Released: {{ movie.release_date }}</span>
-            <span>Runtime: {{ movie.runtime }}</span>
-            <div class="info-overview">
-                <span>Overview: {{ movie.overview }}</span>
+<article>
+    <div class="info-container">
+        <div class="info-wrapper">
+            <div class="info-header">
+                <div class="info-header__image">
+                    <img src="{{ movie.poster_path }}">
+                    <span class="info-header__image__tagline">{{ movie.tagline }}</span>
+                </div>
+                <div class="info-header__content">
+                    <span class="info-header__title">{{ movie.title }} ({{ movie.release_date|release_date_to_year }})</span>
+                    <div class="info-header__main_info">
+                    <span>
+                        Directed by <em>
+                            {% for director in movie.director.all %}
+                            {% if forloop.last %} 
+                                {{ director }} 
+                            {% else %} 
+                                {{ director }},
+                            {%endif%}
+                        {% endfor %}
+                    </em> 
+                    </span>
+                
+                    <span class="info-header__hero">Nicolas Cage as <em>{{ movie.character }}</em></span>
+                
+                    <span class="info-header__genres">
+                        {% for genre in movie.genre.all %}
+                        
+                            {% if forloop.last %} 
+                            <a href="{% url 'get_movies_by_genre' genre|lower %}">{{ genre }} </a>
+                            {% else %} 
+                            <a href="{% url 'get_movies_by_genre' genre|lower %}">{{ genre }}</a>,
+                            {%endif%}
+                        
+                        {% endfor %}
+                    </span>
+                </div>
+                    <div class="info-header__content__metadata">
+                    <span class="info-header__content__metadata__release_date">{{ movie.release_date }}</span>
+                    {% if movie.certification %}<span class="info-header__content__metadata__certification">{{ movie.certification }}</span> {% endif %}
+                    <span class="info-header__content__metadata__runtime">{{ movie.runtime|runtime_to_hours }}</span>
+                </div>
+                    <div class="info-overview">
+                        <span>{{ movie.overview }}</span>
+                    </div>
+                    <div class="info-extra">
+                        {% if movie.budget != 0 %}<span>Budget: {{ movie.budget|int_to_money }}</span>
+                        <span>Revenue: {{ movie.revenue|int_to_money }}</span>
+                        {% endif %}
+                        <span>Featuring: {{ movie.cast_members|cast_comma }}</span>
+                    </div>
+                </div>
             </div>
-            <div class="info-metadata">
-                <span>Runtime: {{ movie.runtime }}</span>
-                <span>Certification: {{ movie.certification }}</span>
-                <span>Director: {{ movie.director.first }}</span>
-                <span>Budget: {{ movie.budget }}</span>
-                <span>Revenue: {{ movie.revenue }}</span>       
-            </div>
-            <div class="info-cast">
-                <span>Cast: {{ movie.cast_members }}</span>
-            </div>
-        </div>
         </div>
     </div>
+</article>
+
+<div class="random-button">
+    <button type="button" class="btn btn-secondary btn-lg btn-block"><a href="{% url 'get_random' %}">Want to try your luck? <i style="font-size:16px" class="fa">&#xf021;</i></a></button>
 </div>
-
-
 
 {% endblock %}

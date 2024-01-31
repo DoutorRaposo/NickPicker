@@ -43,7 +43,6 @@ Changes to dropdown menu when navbar isn't collapsed
 /* Changing font from navbar */
 .navbar-dark .navbar-text {
     color: white !important;
-    margin-left: 10px;
 }
 
 .navbar-dark .navbar-nav .nav-link {
@@ -52,13 +51,13 @@ Changes to dropdown menu when navbar isn't collapsed
 
 @media only screen and (max-width: 990px) {
     .navbar-dark .navbar-nav .nav-link {
-        font-size: 1.75rem !important;
+        font-size: 1.5rem !important;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .navbar-dark .navbar-nav .nav-link {
-        font-size: 1.75rem !important;
+        font-size: 1.5rem !important;
     }
 }
 
@@ -95,7 +94,7 @@ Changes to dropdown menu when navbar isn't collapsed
 
         .dropdown-item {
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             padding: 0.5rem 2rem;
         }
 
@@ -190,6 +189,12 @@ div>.navbar-collapse.collapsing {
     color: black;
 }
 
+ul.pagination {
+    flex-wrap: wrap;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
 /* Search bar*/
 
 .btn.btn-outline-success {
@@ -205,4 +210,12 @@ div>.navbar-collapse.collapsing {
 
 .form-control.me-2:focus {
     box-shadow: 0 0 10px 2px #909090;
+}
+
+
+
+a.navbar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

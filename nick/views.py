@@ -24,7 +24,7 @@ def get_movies(request, genre=None):
         queryset = Title.valid().filter(genre__id=genre_model.id)
         title = genre_model.name
     
-    paginator = Paginator(queryset, 15)
+    paginator = Paginator(queryset, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(
