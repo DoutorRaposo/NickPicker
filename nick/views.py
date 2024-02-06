@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 import random
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
+import json
 
 
 def index(request):
@@ -23,9 +24,9 @@ def get_movies(request, genre=None):
         genre_model = get_object_or_404(Genre.valid(), name__icontains=genre)
         queryset = Title.valid().filter(genre__id=genre_model.id)
         title = genre_model.name
-    
+
     paginator = Paginator(queryset, 12)
-    page_number = request.GET.get('page')
+    page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(
         request, "nick/movies_set.html", context={"movies": page_obj, "title": title}
@@ -61,6 +62,10 @@ def search(request):
         "nick/movies_set.html",
         context={"movies": queryset, "title": f'Results for "{query}"'},
     )
+
+from .questions import questions
+def get_questions(request):
+    return JsonResponse(questions, safe=False)
 
 
 # Install CORS?

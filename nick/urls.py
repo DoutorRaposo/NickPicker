@@ -14,7 +14,8 @@ urlpatterns = [
     path("movies/<int:id>/", views.get_title, name="get_single_movie"),
     path("genres/<str:genre>/", views.get_movies, name="get_movies_by_genre"),
     path("search/", views.search, name="search"),
-    path("random/", views.random_title, name="get_random")
+    path("random/", views.random_title, name="get_random"),
+    path("questions/", views.get_questions, name="get_questions")
 ]
 
 urlpatterns += router.urls

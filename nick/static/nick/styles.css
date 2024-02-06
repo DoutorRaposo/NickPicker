@@ -1,4 +1,5 @@
 body {
+    background-color: black;
     background-image: url(images/Mobile-1.jpg);
     background-size: contain;
     background-attachment: fixed;
@@ -20,10 +21,9 @@ body {
 }
 
 .spacer-block {
-    height: 150px;
+    height: 125px;
 }
 
-/* For desktop is good, have to change for mobile */
 .titles-wrapper {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
@@ -206,7 +206,7 @@ body {
             }
 
             .info-overview {
-               font-weight: 500; 
+                font-weight: 500;
             }
 
             .info-extra {
@@ -266,7 +266,7 @@ body {
         width: 40vw;
 
         & a {
-            color:white;
+            color: white;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -293,3 +293,84 @@ main {
     flex-direction: column;
 }
 
+.index-welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h1 {
+        text-transform: uppercase;
+        font-weight: 900;
+        text-shadow: 0 0 5px #fff;
+        margin: 5px 20px;
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        margin: 5px 20px;
+        text-align: center;
+    }
+}
+
+.app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.start-button {
+    background-color: #000;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    border-color: white;
+    box-shadow: 0 0 10px 2px #909090;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    text-transform: uppercase;
+    font-weight: bold;
+    min-width: 100px;
+    margin: 20px;
+}
+
+.question-box {
+    display: flex;
+    justify-content: center;
+    align-items: first baseline;
+    flex-direction: column;
+    min-width: 35vw;
+}
+
+.question-wrapper__question-title {
+    background-color: rgba(49, 49, 49, 0.75);
+    border-radius: 2px;
+    box-shadow: 0 0 2px 2px #909090;
+    border: 1px solid white;
+    padding: 12px;
+    
+}
+
+.question-wrapper {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.option-box {
+    padding-left: 0px;
+    width: 100%;
+    margin: 15px 0px;
+
+    .option-box__li {
+        background-color: rgba(49, 49, 49, 0.75);
+        border-radius: 2px;
+        border-color: white;
+        box-shadow: 0 0 2px 2px #909090;
+        border: 1px solid white;
+        padding: 12px;
+        margin-bottom: 5px;
+
+    }
+}

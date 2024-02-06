@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Count
 
 
 class Title(models.Model):
@@ -67,6 +68,21 @@ class Genre(models.Model):
                 movies__status__icontains="Released",
                 movies__vote_average__gte=2.1,
             )
+            .distinct()
+            .order_by("name")
+        )
+
+    def most_used():
+        return (
+            Genre.objects.filter(
+                movies__isnull=False,
+                movies__media_type="MV",
+                movies__role_type__icontains="Cast",
+                movies__status__icontains="Released",
+                movies__vote_average__gte=2.1,
+            )
+            .annotate(count_total=Count("movies"))
+            .filter(count_total__gt=6)
             .distinct()
             .order_by("name")
         )

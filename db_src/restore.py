@@ -142,8 +142,11 @@ def subscript_titles():
                     object.cast_members += cast_member['name'] + ", "
                 for item in title["release_dates"]["results"]:
                     if item["iso_3166_1"] == "US":
-                        certification = item["release_dates"][0]["certification"]
-                        object.certification = certification
+                        for release in item["release_dates"]:
+                            if release['certification'] == '':
+                                continue
+                            else:
+                                object.certification = release['certification']
             if date != "":
                 object.release_date = date
             if poster_path != "":
