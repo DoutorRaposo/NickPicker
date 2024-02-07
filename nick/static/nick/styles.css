@@ -25,10 +25,10 @@ body {
 }
 
 .spacer-block {
-    height: 125px;
+    height: 10vh;
 }
 .spacer-block-2 {
-    height: 425px;
+    height: 40vh;
 }
 
 .titles-wrapper {
@@ -301,11 +301,17 @@ main {
 }
 
 .index-welcome {
+    margin: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    transition: opacity var(--trans);
+
+    -webkit-transition: opacity var(--trans) ease-in-out;
+    -moz-transition: opacity var(--trans) ease-in-out;
+    -ms-transition: opacity var(--trans) ease-in-out;
+    -o-transition: opacity var(--trans) ease-in-out;
+    transition: opacity var(--trans) ease-in-out;
 
     h1 {
         text-transform: uppercase;
@@ -349,9 +355,17 @@ main {
     justify-content: center;
     align-items: first baseline;
     flex-direction: column;
-    min-width: 35vw;
-    transition: opacity var(--trans);
+    width: 380px;
+    max-width: 90vw;
+    -webkit-transition: opacity var(--trans) ease-in-out;
+    -moz-transition: opacity var(--trans) ease-in-out;
+    -ms-transition: opacity var(--trans) ease-in-out;
+    -o-transition: opacity var(--trans) ease-in-out;
+    transition: opacity var(--trans) ease-in-out;
+
+
 }
+
 
 .question-wrapper__question-title {
     background-color: rgba(49, 49, 49, 0.75);
@@ -360,6 +374,10 @@ main {
     border: 1px solid white;
     padding: 12px;
     
+}
+
+.question-wrapper__question-subtitle {
+    margin: 2px 0px;
 }
 
 .question-wrapper {
