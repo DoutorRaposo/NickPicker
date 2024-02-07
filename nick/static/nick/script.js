@@ -32,7 +32,6 @@ function initializeQuiz(questions, target) {
     button.addEventListener('click', (e) => {
       const current_question = e.target.parentElement;
       const index = Number(current_question.dataset.question_id);
-      
 
       current_question.style.opacity = '0';
       setTimeout(() => {
@@ -63,8 +62,7 @@ function initializeQuiz(questions, target) {
         }
 
         for (let i = 0; i < question_total; i++) {
-          if (answers_obj[i] == undefined)
-          {
+          if (answers_obj[i] == undefined) {
             answers_obj[i] = "false";
           }
         }
@@ -125,25 +123,45 @@ function initializeQuestions(questions) {
     questionBox.append(titleWrapper);
 
     const answers = document.createElement('ul');
-    answers.className = "option-box";
+    if (question.Options.length < 12) {
+      answers.className = "option-box";
+    }
+    else {
+      answers.className = "option-box big";
+    }
+  
     answers.dataset.relation = question.Select;
     question.Options.forEach((option, option_index) => {
       const li = document.createElement('li');
-      
-      const icon = document.createElement('i')
-      icon.className = "fa-regular fa-square"
 
-      const textSpan = document.createElement('span');
-      textSpan.innerHTML = `${option[1]}`;
 
-      li.append(icon, textSpan);
+      if (question.Select === "img") {
+        const divGif = document.createElement('div');
+        divGif.className = 'gif-container';
+        const imgGif = document.createElement('img')
+        imgGif.className = 'gif-container__img';
+        imgGif.src = `${option[1]}`
+        const spanText = document.createElement('span');
+        spanText.className = 'gif-container__title';
+        spanText.innerHTML = `${option[0]}`
+        divGif.append(imgGif, spanText)
+        li.append(divGif)
+      }
+      else {
+        const icon = document.createElement('i')
+        icon.className = "fa-regular fa-square"
+
+        const textSpan = document.createElement('span');
+        textSpan.innerHTML = `${option[1]}`;
+        li.append(icon, textSpan);
+      }
 
       li.dataset.answer_id = `${option[0]}`;
       li.dataset.question_id = `${index}`;
       li.dataset.relation = question.Select;
       li.className = 'option-box__li unselected';
       li.id = `answer-question-${index}`
-      if (question.Select === "xor" || question.Select === "img") {
+      if (question.Select === "xor") {
         li.addEventListener('click', () => {
           const other_answers = document.querySelectorAll(`#${li.id}`)
           other_answers.forEach(element => {
@@ -154,6 +172,19 @@ function initializeQuestions(questions) {
           )
           li.className = 'option-box__li selected';
           li.querySelector('i').className = "fa-regular fa-square-check"
+
+          document.querySelector(`#next-btn-${index}`).style.display = "block";
+        });
+      }
+      else if (question.Select === "img") {
+        li.addEventListener('click', () => {
+          const other_answers = document.querySelectorAll(`#${li.id}`)
+          other_answers.forEach(element => {
+            element.className = 'option-box__li unselected';
+          }
+
+          )
+          li.className = 'option-box__li selected';
 
           document.querySelector(`#next-btn-${index}`).style.display = "block";
         });

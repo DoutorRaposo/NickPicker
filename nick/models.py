@@ -82,7 +82,7 @@ class Genre(models.Model):
                 movies__vote_average__gte=2.1,
             )
             .annotate(count_total=Count("movies"))
-            .filter(count_total__gt=6)
+            .filter(count_total__gt=7)
             .distinct()
             .order_by("name")
         )

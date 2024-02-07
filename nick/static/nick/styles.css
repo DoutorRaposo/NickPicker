@@ -355,7 +355,7 @@ main {
     justify-content: center;
     align-items: first baseline;
     flex-direction: column;
-    width: 380px;
+    width: 400px;
     max-width: 90vw;
     -webkit-transition: opacity var(--trans) ease-in-out;
     -moz-transition: opacity var(--trans) ease-in-out;
@@ -364,6 +364,10 @@ main {
     transition: opacity var(--trans) ease-in-out;
 
 
+}
+
+.option-box.big {
+    column-count: 2;
 }
 
 
@@ -450,4 +454,17 @@ main {
 
 .fa-regular.fa-square-check {
     margin-right: 10px;
+}
+
+
+.gif-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    img {
+        margin: 15px;
+        max-width: 80%; height: auto;
+    }
 }
