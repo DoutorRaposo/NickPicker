@@ -173,7 +173,10 @@ function initializeQuestions(questions) {
           li.className = 'option-box__li selected';
           li.querySelector('i').className = "fa-regular fa-square-check"
 
-          document.querySelector(`#next-btn-${index}`).style.display = "block";
+                    document.querySelector(`#next-btn-${index}`).style.display = "block";
+          setTimeout(() => {
+            document.querySelector(`#next-btn-${index}`).style.opacity = '1';
+          }, transitionTime / 2)
         });
       }
       else if (question.Select === "img") {
@@ -187,6 +190,9 @@ function initializeQuestions(questions) {
           li.className = 'option-box__li selected';
 
           document.querySelector(`#next-btn-${index}`).style.display = "block";
+          setTimeout(() => {
+            document.querySelector(`#next-btn-${index}`).style.opacity = '1';
+          }, transitionTime / 2)
         });
       }
       else if (question.Select === "and") {
@@ -212,8 +218,11 @@ function initializeQuestions(questions) {
             li.querySelector('i').className = "fa-regular fa-square-check"
           }
 
-
           document.querySelector(`#next-btn-${index}`).style.display = "block";
+          setTimeout(() => {
+            document.querySelector(`#next-btn-${index}`).style.opacity = '1';
+          }, transitionTime / 2)
+          
         }
         );
       }
@@ -243,6 +252,7 @@ function initializeQuestions(questions) {
       nextButton.innerHTML = "Next";
     }
     nextButton.style.display = "none";
+    nextButton.style.opacity = "0";
     nextButton.dataset.question_id = `${index}`
 
     questionBox.append(nextButton)

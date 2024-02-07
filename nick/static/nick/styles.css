@@ -431,6 +431,12 @@ main {
     padding: 12px;
     margin: 5px 0px;
     text-align: center;
+
+    -webkit-transition: opacity var(--trans / 2) ease-in-out;
+    -moz-transition: opacity var(--trans / 2) ease-in-out;
+    -ms-transition: opacity var(--trans / 2) ease-in-out;
+    -o-transition: opacity var(--trans / 2) ease-in-out;
+    transition: opacity calc(var(--trans) / 2) ease-in-out;
 }
 
 .next-btn:hover {
