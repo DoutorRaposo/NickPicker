@@ -22,7 +22,7 @@ questions = {
                 ("90s", "1990's"),
                 ("80s","1980's"),
             ],
-            "Select": "or",
+            "Select": "xor",
         },
         {
             "Title": "Do you wish to select prefered age ratings?",
@@ -32,7 +32,15 @@ questions = {
                 ("PG-13", "Teens 13+ (PG-13)"),
                 ("R", "Adults 18+ (NC-17, NR, R and Unrated)")
             ],
-            "Select": "or"
+            "Select": "xor"
+        },
+        {
+            "Title": "Do you care about movie popularity?",
+            "Options": [
+                (False, "No, I don't mind"),
+                (True, "Yes, I care about user votes and movie popularity")
+            ],
+            "Select": "xor"
         },
         {
             "Title": "Select any other keyword you're interested in.",
