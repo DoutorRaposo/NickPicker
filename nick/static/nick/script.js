@@ -32,8 +32,8 @@ function mountQuestions(questions, target) {
     title.className = 'question-wrapper__question-title';
     title.innerHTML = `${index + 1}. ${question.Title}`;
     titleWrapper.append(title)
-    
 
+    console.log(question)
     if (question.Select === "or") {
       const subtitle = document.createElement('div');
       subtitle.className = "question-wrapper__question-subtitle"
@@ -44,10 +44,21 @@ function mountQuestions(questions, target) {
 
     const answers = document.createElement('ul')
     answers.className = "option-box"
+    answers.dataset.relation = question.Select
     question.Options.forEach(option => {
       const li = document.createElement('li')
-      li.innerHTML = `${option}`
-      li.className = 'option-box__li'
+      li.innerHTML = `${option[1]}`
+      li.dataset.answer_id = `${option[0]}`
+      li.dataset.question_id = `${index}`
+      li.className = 'option-box__li unselected'
+      li.addEventListener('click', () => {
+        if (li.className === 'option-box__li selected') {
+          li.className = 'option-box__li unselected'
+        }
+        else {
+          li.className = 'option-box__li selected'
+        }
+      })
       answers.append(li)
     });
     questionBox.append(answers);

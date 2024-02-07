@@ -94,6 +94,21 @@ class Keyword(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def most_used():
+        return (
+            Keyword.objects.filter(
+                keywords__isnull=False,
+                keywords__media_type="MV",
+                keywords__role_type__icontains="Cast",
+                keywords__status__icontains="Released",
+                keywords__vote_average__gte=2.1,
+            )
+            .annotate(count_total=Count("keywords"))
+            .filter(count_total__gt=5)
+            .distinct()
+            .order_by("-count_total")
+        )
 
 
 class Company(models.Model):
