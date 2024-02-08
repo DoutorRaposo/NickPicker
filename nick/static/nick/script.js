@@ -83,8 +83,8 @@ function initializeQuiz(questions, target) {
       }, transitionTime)
 
       if (0 <= (index - 1)) {
-        document.querySelector(`#question-${index - 1}`).style.display = 'block';
         setTimeout(() => {
+          document.querySelector(`#question-${index - 1}`).style.display = 'block';
           document.querySelector(`#question-${index - 1}`).style.opacity = '1';
         }, transitionTime)
       }
@@ -161,71 +161,7 @@ function initializeQuestions(questions) {
       li.dataset.relation = question.Select;
       li.className = 'option-box__li unselected';
       li.id = `answer-question-${index}`
-      if (question.Select === "xor") {
-        li.addEventListener('click', () => {
-          const other_answers = document.querySelectorAll(`#${li.id}`)
-          other_answers.forEach(element => {
-            element.className = 'option-box__li unselected';
-            element.querySelector('i').className = "fa-regular fa-square"
-          }
-
-          )
-          li.className = 'option-box__li selected';
-          li.querySelector('i').className = "fa-regular fa-square-check"
-
-                    document.querySelector(`#next-btn-${index}`).style.display = "block";
-          setTimeout(() => {
-            document.querySelector(`#next-btn-${index}`).style.opacity = '1';
-          }, transitionTime / 2)
-        });
-      }
-      else if (question.Select === "img") {
-        li.addEventListener('click', () => {
-          const other_answers = document.querySelectorAll(`#${li.id}`)
-          other_answers.forEach(element => {
-            element.className = 'option-box__li unselected';
-          }
-
-          )
-          li.className = 'option-box__li selected';
-
-          document.querySelector(`#next-btn-${index}`).style.display = "block";
-          setTimeout(() => {
-            document.querySelector(`#next-btn-${index}`).style.opacity = '1';
-          }, transitionTime / 2)
-        });
-      }
-      else if (question.Select === "and") {
-        li.addEventListener('click', () => {
-          if (option_index == 0) {
-            const other_answers = document.querySelectorAll(`#${li.id}`)
-            other_answers.forEach(element => {
-              element.className = 'option-box__li unselected';
-              element.querySelector('i').className = "fa-regular fa-square"
-            })
-          }
-          else {
-            document.querySelectorAll(`#${li.id}`)[0].className = 'option-box__li unselected';
-            document.querySelectorAll(`#${li.id}`)[0].querySelector('i').className = "fa-regular fa-square"
-          }
-
-          if (li.className === 'option-box__li selected') {
-            li.className = 'option-box__li unselected';
-            li.querySelector('i').className = "fa-regular fa-square"
-          }
-          else {
-            li.className = 'option-box__li selected';
-            li.querySelector('i').className = "fa-regular fa-square-check"
-          }
-
-          document.querySelector(`#next-btn-${index}`).style.display = "block";
-          setTimeout(() => {
-            document.querySelector(`#next-btn-${index}`).style.opacity = '1';
-          }, transitionTime / 2)
-          
-        }
-        );
-      }
+      createAnswers(question, li, index, option_index);
       answers.append(li);
     });
     questionBox.append(answers);
@@ -262,3 +198,71 @@ function initializeQuestions(questions) {
   });
   return quizWrapper;
 }
+function createAnswers(question, li, index, option_index) {
+  if (question.Select === "xor") {
+    li.addEventListener('click', () => {
+      const other_answers = document.querySelectorAll(`#${li.id}`);
+      other_answers.forEach(element => {
+        element.className = 'option-box__li unselected';
+        element.querySelector('i').className = "fa-regular fa-square";
+      }
+
+      );
+      li.className = 'option-box__li selected';
+      li.querySelector('i').className = "fa-regular fa-square-check";
+
+      setTimeout(() => {
+        document.querySelector(`#next-btn-${index}`).style.display = "block";
+        document.querySelector(`#next-btn-${index}`).style.opacity = '1';
+      }, transitionTime / 2);
+    });
+  }
+  else if (question.Select === "img") {
+    li.addEventListener('click', () => {
+      const other_answers = document.querySelectorAll(`#${li.id}`);
+      other_answers.forEach(element => {
+        element.className = 'option-box__li unselected';
+      }
+
+      );
+      li.className = 'option-box__li selected';
+
+      setTimeout(() => {
+        document.querySelector(`#next-btn-${index}`).style.display = "block";
+        document.querySelector(`#next-btn-${index}`).style.opacity = '1';
+      }, transitionTime / 2);
+    });
+  }
+  else if (question.Select === "and") {
+    li.addEventListener('click', () => {
+      if (option_index == 0) {
+        const other_answers = document.querySelectorAll(`#${li.id}`);
+        other_answers.forEach(element => {
+          element.className = 'option-box__li unselected';
+          element.querySelector('i').className = "fa-regular fa-square";
+        });
+      }
+      else {
+        document.querySelectorAll(`#${li.id}`)[0].className = 'option-box__li unselected';
+        document.querySelectorAll(`#${li.id}`)[0].querySelector('i').className = "fa-regular fa-square";
+      }
+
+      if (li.className === 'option-box__li selected') {
+        li.className = 'option-box__li unselected';
+        li.querySelector('i').className = "fa-regular fa-square";
+      }
+      else {
+        li.className = 'option-box__li selected';
+        li.querySelector('i').className = "fa-regular fa-square-check";
+      }
+
+      setTimeout(() => {
+        document.querySelector(`#next-btn-${index}`).style.display = "block";
+        document.querySelector(`#next-btn-${index}`).style.opacity = '1';
+      }, transitionTime / 2);
+
+    }
+    );
+  }
+}
+
