@@ -1,3 +1,4 @@
+/* Transition time, works with tandem to the JS timeout time */
 :root {
     --trans: 0.25s;
 }
@@ -237,7 +238,7 @@ body {
     }
 }
 
-
+/* Footer Styles */
 .site-footer {
     div {
         margin-top: 2vh;
@@ -261,7 +262,7 @@ body {
         }
     }
 }
-
+/* random button on the title page */
 .random-button {
     display: flex;
     justify-content: center;
