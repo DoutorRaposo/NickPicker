@@ -165,6 +165,7 @@ function initializeQuestions(questions) {
         const imgGif = document.createElement('img')
         imgGif.className = 'gif-container__img';
         imgGif.src = `${option[1]}`;
+        imgGif.alt = `GIF of Nicolas Cage in a movie, described expression "${option[0]}"`;
         const spanText = document.createElement('span');
         spanText.className = 'gif-container__title';
         spanText.innerHTML = `${option[0]}`;

@@ -1,6 +1,8 @@
 from django import template
 import datetime
 
+"""Those are tags to convert some values to more human readable in the UI"""
+
 register = template.Library()
 
 @register.filter

@@ -3,6 +3,9 @@ from django.db.models import Count
 
 
 class Title(models.Model):
+    """This is the main model that will have all the titles that can be used in the website
+    Some fields could be more relational, but there are unintented consequences using other's database that I've simplified:
+    certification and cast members could be a mess to set up with no reward in terms of usefulness in the project"""
     MEDIA_TYPE_CHOICES = [
         ("MV", "Movie"),
         ("TV", "TV"),
@@ -37,6 +40,9 @@ class Title(models.Model):
         return ", ".join([g.name for g in self.genre.all()])
 
     def valid():
+        """By "valid", I'm using only titles that Nick Cage is part of the cast, that are movies and are released 
+        (the voter average excluding 2.0 and below is because there are weird titles that came with the whole db).
+        There are titles not used in the website, but maybe eventually? For now this is the filter."""
         return (
             Title.objects.all()
             .filter(
@@ -60,6 +66,7 @@ class Genre(models.Model):
         return ", ".join([g.title for g in self.movies.all()])
 
     def valid():
+        """Excludes titles that are exclusive to TV and enables to view genres that actually contains movies we'll be using in the website"""
         return (
             Genre.objects.filter(
                 movies__isnull=False,
@@ -73,6 +80,7 @@ class Genre(models.Model):
         )
 
     def most_used():
+        """This is for the quiz, only titles with more than 7 movies will be used, otherwise some genres will only get the same movies"""
         return (
             Genre.objects.filter(
                 movies__isnull=False,
@@ -89,6 +97,7 @@ class Genre(models.Model):
 
 
 class Keyword(models.Model):
+    """This helps the search input in the website as well as the quiz"""
     tmdb_id = models.IntegerField()
     name = models.CharField(max_length=32)
 
@@ -96,6 +105,7 @@ class Keyword(models.Model):
         return self.name
     
     def most_used():
+        """The quiz uses some of the common keywords so they could be useful in the quiz"""
         return (
             Keyword.objects.filter(
                 keywords__isnull=False,
@@ -112,6 +122,7 @@ class Keyword(models.Model):
 
 
 class Company(models.Model):
+    """I only created this so it would be more convenient in describing the movie"""
     tmdb_id = models.IntegerField()
     name = models.CharField(max_length=32)
 
@@ -123,6 +134,7 @@ class Company(models.Model):
 
 
 class Director(models.Model):
+    """I only created this so it would be more convenient in describing the movie"""
     tmdb_id = models.IntegerField()
     name = models.CharField(max_length=32)
 

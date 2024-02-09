@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import *
 from django.db.models import Count
 
+"""Not much here, just adding things to be useful during debugging in the admin page, however I will describe some tricks"""
+
 
 class TitleAdmin(admin.ModelAdmin):
     list_display = (
@@ -17,7 +19,7 @@ class TitleAdmin(admin.ModelAdmin):
         "genres_list",
         "certification",
     )
-    list_filter = ("media_type", "certification", "role_type", "role", "status", "genre__name")
+    list_filter = ("media_type", "certification", "role_type", "role", "status", "genre__name") #genre__name filters the foreign keyword by the name, so it can be used!
     search_fields = ("title", "id", "media_type", "role", "genre__name")
     filter_horizontal = ("genre", "keywords", "companies", "director")
 
@@ -26,7 +28,7 @@ class GenreAdmin(admin.ModelAdmin):
     list_display = ("name", "id", "movies_list", "total_titles")
     list_filter = ("movies__genre", "movies__media_type", "movies__status")
 
-    
+    """Two next functions enable me to check number of movies by annotating (reverse relation). Useful for testing some queries and checking against the admin panel"""
     def get_queryset(self, request):
         return super().get_queryset(request).annotate(titles_count=Count("movies"))
     

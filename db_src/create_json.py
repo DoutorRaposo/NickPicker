@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+"""An .env file with this key or an enviroment variable will do here"""
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 headers = {"accept": "application/json", "Authorization": f"Bearer {TMDB_API_KEY}"}
 
@@ -29,17 +30,20 @@ def generate():
 
 
 def get_data(url):
+    """Just a fetch function"""
     response = requests.get(url, headers=headers)
     data = response.json()
     return data
 
 
 def write_json(filename, data):
+    """Writes to filesystem the data"""
     with open(f"db_src/{filename}.json", "w") as file:
         json.dump(data, file, indent=4)
 
 
 def add_info(title):
+    """This is aditional info that is from the combined API request, basically we only add the needed info"""
     id = title["id"]
     if title["media_type"] == "movie":
         url = f"https://api.themoviedb.org/3/movie/{id}?append_to_response=keywords%2Ccredits%2Crelease_dates&language=en-US"

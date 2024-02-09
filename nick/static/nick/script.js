@@ -1,15 +1,8 @@
-//This is the original file with comments, which are excluded from the front-end script by babel
 'use strict';
-
-// This global const is used in tandem with the transition in CSS to show up and hide questions
 const transitionTime = 250;
-
-// When the content loads, the start button initializes the quiz
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".start-button").addEventListener('click', e => fetchQuiz(e));
 });
-
-// This function gets the quiz info and starts the function that mounts the questions
 function fetchQuiz(e) {
   const appdiv = e.target.parentElement.parentElement;
   fetch('questions/').then(response => response.json()).then(response => {
@@ -20,23 +13,17 @@ function fetchQuiz(e) {
     initializeQuiz(response, appdiv);
   });
 }
-
-// This function mounts the questions and the functions of the next and back buttons
 function initializeQuiz(questions, target) {
   const quizWrapper = initializeQuestions(questions);
   target.append(quizWrapper);
   const question_total = questions.questions.length;
   setNextButton(question_total);
   setBackButton();
-
-  // This is the first question showing up!
   document.querySelector(`#question-0`).style.display = "block";
   setTimeout(() => {
     document.querySelector(`#question-0`).style.opacity = '1';
   }, transitionTime);
 }
-
-//This function sets up the back button to hide the current question and show the next one
 function setBackButton() {
   const prevButtons = document.querySelectorAll(".back-btn");
   prevButtons.forEach(button => {
@@ -56,8 +43,6 @@ function setBackButton() {
     });
   });
 }
-
-// This function sets up the next button to hide current question and show the next one
 function setNextButton(question_total) {
   const nextButtons = document.querySelectorAll(".next-btn");
   nextButtons.forEach(button => {
@@ -73,9 +58,7 @@ function setNextButton(question_total) {
         setTimeout(() => {
           document.querySelector(`#question-${index + 1}`).style.opacity = '1';
         }, transitionTime);
-      }
-      // If the question is the last one, then we will start to check the results server-side
-      else {
+      } else {
         getResults(question_total);
       }
     });
@@ -84,7 +67,6 @@ function setNextButton(question_total) {
 function getResults(question_total) {
   const answers_list = document.querySelectorAll(".selected");
   let answers_obj = {};
-  // Check every "selected" class as answers and collects to object that we'll use for the results
   for (let i = 0; i < answers_list.length; i++) {
     if (answers_list[i].dataset.relation === "xor" || answers_list[i].dataset.relation === "img") {
       answers_obj[answers_list[i].dataset.question_id] = answers_list[i].dataset.answer_id;
@@ -96,17 +78,13 @@ function getResults(question_total) {
       }
     }
   }
-  // If the user managed to select none of the answers by any means, we set it to false
   for (let i = 0; i < question_total; i++) {
     if (answers_obj[i] == undefined) {
       answers_obj[i] = "false";
     }
   }
-  // This is the object we will send in POST!!
   console.log(answers_obj);
 }
-
-// Constructs all questions and answers elements
 function initializeQuestions(questions) {
   const quizWrapper = document.createElement('div');
   quizWrapper.className = "quiz-wrapper";
@@ -121,8 +99,6 @@ function initializeQuestions(questions) {
     title.className = 'question-wrapper__question-title';
     title.innerHTML = `${index + 1}. ${question.Title}`;
     titleWrapper.append(title);
-
-    // Subtitles are only for multiple choice questions
     if (question.Select === "and") {
       const subtitle = document.createElement('div');
       subtitle.className = "question-wrapper__question-subtitle";
@@ -130,8 +106,6 @@ function initializeQuestions(questions) {
       titleWrapper.append(subtitle);
     }
     questionBox.append(titleWrapper);
-
-    // If answers are big list, spread'em out
     const answers = document.createElement('ul');
     if (question.Options.length < 12) {
       answers.className = "option-box";
@@ -141,14 +115,13 @@ function initializeQuestions(questions) {
     answers.dataset.relation = question.Select;
     question.Options.forEach((option, option_index) => {
       const li = document.createElement('li');
-
-      // If the type is image, we don't need the checkbox, but otherwise we add it
       if (question.Select === "img") {
         const divGif = document.createElement('div');
         divGif.className = 'gif-container';
         const imgGif = document.createElement('img');
         imgGif.className = 'gif-container__img';
         imgGif.src = `${option[1]}`;
+        imgGif.alt = `GIF of Nicolas Cage in a movie, described expression "${option[0]}"`;
         const spanText = document.createElement('span');
         spanText.className = 'gif-container__title';
         spanText.innerHTML = `${option[0]}`;
@@ -170,8 +143,6 @@ function initializeQuestions(questions) {
       answers.append(li);
     });
     questionBox.append(answers);
-
-    // Back button don't exist for the first question
     if (index != 0) {
       const backButton = document.createElement('div');
       backButton.className = "back-btn-wrapper";
@@ -202,10 +173,7 @@ function initializeQuestions(questions) {
   });
   return quizWrapper;
 }
-
-// Builds every answers for every question
 function createAnswers(question, li, index, option_index) {
-  // For every type of question, a different path in building
   if (question.Select === "xor") {
     li.addEventListener('click', () => {
       const other_answers = document.querySelectorAll(`#${li.id}`);

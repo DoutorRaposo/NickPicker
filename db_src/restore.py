@@ -4,6 +4,7 @@ from nick.models import *
 
 
 def restore_db():
+    """This is the main function to restore all db. First will clear any record and then will start to read the JSON files to update"""
     Genre.objects.all().delete()
     Title.objects.all().delete()
     Keyword.objects.all().delete()
@@ -20,6 +21,7 @@ def restore_db():
 
 
 def subscript_genres():
+    """Read the JSON as given by the create_json module and creates them all"""
     with open("db_src/genres_movie.json") as file:
         data_movies = json.load(file)
     with open("db_src/genres_tv.json") as file:
@@ -34,6 +36,7 @@ def subscript_genres():
 
 
 def subscript_add_info():
+    """Additional info such as extra models Keyword, Director and Company"""
     with open("db_src/combined.json") as file:
         data_keywords = json.load(file)
 
@@ -69,6 +72,7 @@ def subscript_add_info():
 
 
 def subscript_titles():
+    """Main info is added here"""
     with open("db_src/combined.json") as file:
         data = json.load(file)
 
@@ -121,7 +125,7 @@ def subscript_titles():
                 media_type=media_type,
                 role_type=obj_role_type,
             )
-
+            # Most info is only needed if title is a movie
             if media_type == "MV":
                 object.budget = title["budget"]
                 object.revenue = title["revenue"]
@@ -151,6 +155,7 @@ def subscript_titles():
                 object.release_date = date
             if poster_path != "":
                 object.poster_path = poster_path
+            # This is ensures that we know if he was casted in a documentary or a movie
             for genre_id in genres:
                 genre = Genre.objects.filter(tmdb_id=genre_id).first()
                 object.genre.add(genre)
@@ -164,6 +169,7 @@ def subscript_titles():
 
 
 def get_date(title):
+    """This converts the string date to a datetime object to be used in the model"""
     match title["media_type"]:
         case "movie":
             release_str = title["release_date"]

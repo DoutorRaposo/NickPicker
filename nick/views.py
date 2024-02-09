@@ -2,20 +2,23 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 import random
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
-import json
+from .questions import questions
 
 
 def index(request):
+    """Default index view"""
     return render(request, "nick/index.html")
 
 
 def get_movies(request, genre=None):
+    """This view enables us to render all titles either by no filter or by genre filter
+    Pagination for the titles can be altered here"""
     if genre == None:
         queryset = Title.valid()
         title = "Movies by Cage"
@@ -34,17 +37,20 @@ def get_movies(request, genre=None):
 
 
 def get_title(request, id):
+    """Single movie page"""
     movie = Title.objects.get(pk=id)
     return render(request, "nick/title.html", context={"movie": movie})
 
 
 def random_title(request):
+    """Redirects to random single movie page!"""
     titles = list(Title.valid())
     random_title = random.choice(titles)
     return redirect("get_single_movie", id=random_title.id)
 
 
 def search(request):
+    """Searches using every useful item in the model, not only the title name"""
     query = request.GET.get("q", "")
     queryset = Title.valid().filter(
         Q(title__icontains=query)
@@ -63,8 +69,8 @@ def search(request):
         context={"movies": queryset, "title": f'Results for "{query}"'},
     )
 
-from .questions import questions
 def get_questions(request):
+    """This serves as an API response to the JS on the front-end to get all questions"""
     return JsonResponse(questions, safe=False)
 
 

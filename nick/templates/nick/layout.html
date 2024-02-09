@@ -1,3 +1,5 @@
+{# Layout page with all the tags and navbar #}
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +54,7 @@
                                 Genres
                             </a>
                             <ul class="dropdown-menu custom" aria-labelledby="navbarDropdown">
+                                {# This context is added form context_processors #}
                                 {% for genre in genres %}
                                 <li><a class="dropdown-item"
                                         href="{% url 'get_movies_by_genre' genre.name|lower %}">{{genre.name }}</a>
