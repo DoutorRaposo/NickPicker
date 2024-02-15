@@ -479,6 +479,8 @@ main {
     }
 }
 
+
+/* results cards classes */
 .results-wrapper {
     background-color: rgba(49, 49, 49, 0.75);
     padding: 2vw;
@@ -546,4 +548,10 @@ main {
 
 .quiz-final-wrapper {
     transition: opacity var(--trans) ease-in-out;
+}
+
+.results-wrapper__info__content__title__link:hover {
+
+    color: white;
+
 }
