@@ -11,8 +11,10 @@ from django.core.paginator import Paginator
 from .questions import questions
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-
+#Just ensures that will be a cookie available to use
+@ensure_csrf_cookie
 def index(request):
     """Default index view"""
     return render(request, "nick/index.html")
@@ -76,8 +78,6 @@ def get_questions(request):
     """This serves as an API response to the JS on the front-end to get all questions"""
     return JsonResponse(questions, safe=False)
 
-@csrf_exempt
-# To use CSRF, we also need to use HTTPS and I'm testing using local network. Could think of a workaround eventually.
 def results(request):
     """This view is responsible for getting the data from the quiz and returning a number of recommendations
     Each question has a "TYPE" so we can identify which type of question is (and also enable the possibility of adding more)

@@ -30,8 +30,21 @@ body {
 }
 
 .spacer-block-2 {
-    height: 40vh;
+    height: 60vh;
 }
+
+@media only screen and (min-width:767px) {
+    .spacer-block-2 {
+        height: 60vh;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .spacer-block-2 {
+        height: 40vh;
+    }
+}
+
 
 .titles-wrapper {
     display: grid;
@@ -531,7 +544,7 @@ main {
 }
 
 .results-wrapper__info__overview_text {
-    font-weight: 100;
+    font-weight: 200;
     line-height: 1.5;
     display: block;
 }
