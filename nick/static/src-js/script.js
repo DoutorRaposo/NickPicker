@@ -91,6 +91,8 @@ function setNextButton(question_total) {
   });
 }
 
+
+// Collects results, sends a request for said results. Then decides if there is results to show or not
 function getResults(question_total) {
   const answers_list = document.querySelectorAll(".selected");
   let answers_obj = {};
@@ -137,52 +139,57 @@ function getResults(question_total) {
 
       }
       else {
-        const mainApp = document.querySelector("#app");
-        const resultsWrapper = document.createElement('div');
-        resultsWrapper.className = "quiz-final-wrapper";
-        mainApp.append(resultsWrapper);
-
-        const resultsDiv = document.createElement('div');
-        resultsDiv.className = "results-wrapper";
-        resultsDiv.id = `no-result`
-
-        const resultsHeader = document.createElement('span');
-        resultsHeader.className = "results-wrapper__header";
-        resultsHeader.innerHTML = "Sorry, no results found."
-
-        resultsDiv.append(resultsHeader);
-
-        const resultsText = document.createElement('span');
-        resultsText.className = "results-wrapper__text";
-        resultsText.innerHTML = "Please try again the quiz with different answers combination";
-
-        resultsDiv.append(resultsText);
-
-        const button = document.createElement('button');
-        button.className = "btn btn-secondary btn-lg btn-block";
-        button.type = "button";
-        button.id = "result-button";
-        button.innerHTML = 'Retake quiz <i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>';
-
-        button.addEventListener('click', () => location.reload());
-
-        resultsDiv.append(button);
-
-        resultsDiv.style.display = "none";
-        resultsDiv.style.opacity = '0';
-
-        resultsWrapper.append(resultsDiv)
-
-        resultsDiv.style.display = "flex";
-        setTimeout( () => {
-          resultsDiv.style.opacity = '1';
-        }, transitionTime);
-
+        generateNotFound();
       }
 
     })
 }
 
+// This is the path if there is no results from the server
+function generateNotFound() {
+  const mainApp = document.querySelector("#app");
+  const resultsWrapper = document.createElement('div');
+  resultsWrapper.className = "quiz-final-wrapper";
+  mainApp.append(resultsWrapper);
+
+  const resultsDiv = document.createElement('div');
+  resultsDiv.className = "results-wrapper";
+  resultsDiv.id = `no-result`;
+
+  const resultsHeader = document.createElement('span');
+  resultsHeader.className = "results-wrapper__header";
+  resultsHeader.innerHTML = "Sorry, no results found.";
+
+  resultsDiv.append(resultsHeader);
+
+  const resultsText = document.createElement('span');
+  resultsText.className = "results-wrapper__text";
+  resultsText.innerHTML = "Please try again the quiz with different answers combination";
+
+  resultsDiv.append(resultsText);
+
+  const button = document.createElement('button');
+  button.className = "btn btn-secondary btn-lg btn-block";
+  button.type = "button";
+  button.id = "result-button";
+  button.innerHTML = 'Retake quiz <i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>';
+
+  button.addEventListener('click', () => location.reload());
+
+  resultsDiv.append(button);
+
+  resultsDiv.style.display = "none";
+  resultsDiv.style.opacity = '0';
+
+  resultsWrapper.append(resultsDiv);
+
+  resultsDiv.style.display = "flex";
+  setTimeout(() => {
+    resultsDiv.style.opacity = '1';
+  }, transitionTime);
+}
+
+// Generate the result and the logic for hiding and showing them with event listeners
 function generateResults(response) {
   const mainApp = document.querySelector("#app");
   const resultsWrapper = document.createElement('div');
@@ -226,6 +233,7 @@ function generateResults(response) {
   );
 }
 
+// Preloads all result cards and hides them
 function resultCards(data, index, array) {
   const resultsDiv = document.createElement('div');
   resultsDiv.className = "results-wrapper";

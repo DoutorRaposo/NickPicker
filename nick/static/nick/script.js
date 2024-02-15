@@ -101,37 +101,40 @@ function getResults(question_total) {
     if (response.length !== 0) {
       generateResults(response);
     } else {
-      const mainApp = document.querySelector("#app");
-      const resultsWrapper = document.createElement('div');
-      resultsWrapper.className = "quiz-final-wrapper";
-      mainApp.append(resultsWrapper);
-      const resultsDiv = document.createElement('div');
-      resultsDiv.className = "results-wrapper";
-      resultsDiv.id = `no-result`;
-      const resultsHeader = document.createElement('span');
-      resultsHeader.className = "results-wrapper__header";
-      resultsHeader.innerHTML = "Sorry, no results found.";
-      resultsDiv.append(resultsHeader);
-      const resultsText = document.createElement('span');
-      resultsText.className = "results-wrapper__text";
-      resultsText.innerHTML = "Please try again the quiz with different answers combination";
-      resultsDiv.append(resultsText);
-      const button = document.createElement('button');
-      button.className = "btn btn-secondary btn-lg btn-block";
-      button.type = "button";
-      button.id = "result-button";
-      button.innerHTML = 'Retake quiz <i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>';
-      button.addEventListener('click', () => location.reload());
-      resultsDiv.append(button);
-      resultsDiv.style.display = "none";
-      resultsDiv.style.opacity = '0';
-      resultsWrapper.append(resultsDiv);
-      resultsDiv.style.display = "flex";
-      setTimeout(() => {
-        resultsDiv.style.opacity = '1';
-      }, transitionTime);
+      generateNotFound();
     }
   });
+}
+function generateNotFound() {
+  const mainApp = document.querySelector("#app");
+  const resultsWrapper = document.createElement('div');
+  resultsWrapper.className = "quiz-final-wrapper";
+  mainApp.append(resultsWrapper);
+  const resultsDiv = document.createElement('div');
+  resultsDiv.className = "results-wrapper";
+  resultsDiv.id = `no-result`;
+  const resultsHeader = document.createElement('span');
+  resultsHeader.className = "results-wrapper__header";
+  resultsHeader.innerHTML = "Sorry, no results found.";
+  resultsDiv.append(resultsHeader);
+  const resultsText = document.createElement('span');
+  resultsText.className = "results-wrapper__text";
+  resultsText.innerHTML = "Please try again the quiz with different answers combination";
+  resultsDiv.append(resultsText);
+  const button = document.createElement('button');
+  button.className = "btn btn-secondary btn-lg btn-block";
+  button.type = "button";
+  button.id = "result-button";
+  button.innerHTML = 'Retake quiz <i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>';
+  button.addEventListener('click', () => location.reload());
+  resultsDiv.append(button);
+  resultsDiv.style.display = "none";
+  resultsDiv.style.opacity = '0';
+  resultsWrapper.append(resultsDiv);
+  resultsDiv.style.display = "flex";
+  setTimeout(() => {
+    resultsDiv.style.opacity = '1';
+  }, transitionTime);
 }
 function generateResults(response) {
   const mainApp = document.querySelector("#app");
