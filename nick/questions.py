@@ -9,6 +9,7 @@ questions = {
     "questions": [
         {
             "Title": "How are you today?",
+            "Type": "feeling",
             # first value should indicate the description of the image
             "Options": [
                 ("Hysterical", "/static/nick/images/hysterical.gif"),
@@ -20,12 +21,14 @@ questions = {
         },
         {
             "Title": "Choose any genre you're interested in",
+            "Type": "genre",
             "Options": [(False, "Any genre")]
             + [(x.id, str(x)) for x in list(Genre.most_used())],
             "Select": "and",
         },
         {
             "Title": "Do you wish the movie to be from a specific decade?",
+            "Type": "decade",
             "Options": [
                 (False, "Any decade"),
                 ("recent", "2010's and 2020s"),
@@ -37,6 +40,7 @@ questions = {
         },
         {
             "Title": "Do you wish to select prefered age ratings?",
+            "Type": "certification",
             "Options": [
                 (False, "No prefered age rating"),
                 ("PG", "Older kids 7+ (PG)"),
@@ -47,6 +51,7 @@ questions = {
         },
         {
             "Title": "Do you care about movie popularity?",
+            "Type": "popularity",
             "Options": [
                 (False, "No, I don't mind"),
                 (True, "Yes, I care about user votes and movie popularity"),
@@ -55,6 +60,7 @@ questions = {
         },
         {
             "Title": "Select any other keyword you're interested in.",
+            "Type": "keywords",
             "Options": [(False, "No other keyword")]
             + [(x.id, f"'{str(x).title()}'") for x in list(Keyword.most_used())],
             "Select": "and",

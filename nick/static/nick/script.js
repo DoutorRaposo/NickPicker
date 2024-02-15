@@ -69,21 +69,51 @@ function getResults(question_total) {
   let answers_obj = {};
   for (let i = 0; i < answers_list.length; i++) {
     if (answers_list[i].dataset.relation === "xor" || answers_list[i].dataset.relation === "img") {
-      answers_obj[answers_list[i].dataset.question_id] = answers_list[i].dataset.answer_id;
+      answers_obj[answers_list[i].dataset.question_type] = answers_list[i].dataset.answer_id;
     } else if (answers_list[i].dataset.relation === "and") {
-      if (answers_obj[answers_list[i].dataset.question_id] == undefined) {
-        answers_obj[answers_list[i].dataset.question_id] = [answers_list[i].dataset.answer_id];
+      if (answers_obj[answers_list[i].dataset.question_type] == undefined) {
+        answers_obj[answers_list[i].dataset.question_type] = [answers_list[i].dataset.answer_id];
       } else {
-        answers_obj[answers_list[i].dataset.question_id].push(answers_list[i].dataset.answer_id);
+        answers_obj[answers_list[i].dataset.question_type].push(answers_list[i].dataset.answer_id);
       }
     }
   }
-  for (let i = 0; i < question_total; i++) {
-    if (answers_obj[i] == undefined) {
-      answers_obj[i] = "false";
+  for (const item in answers_obj) {
+    if (answers_obj[item] === "false") {
+      answers_obj[item] = false;
+    }
+    if (Array.isArray(answers_obj[item])) {
+      if (answers_obj[item].includes("false")) {
+        answers_obj[item] = false;
+      }
     }
   }
   console.log(answers_obj);
+  let csrftoken = getCookie('csrftoken');
+  fetch('results', {
+    method: 'POST',
+    body: JSON.stringify(answers_obj),
+    headers: {
+      'X-CSRFToken': csrftoken
+    },
+    mode: 'same-origin'
+  }).then(response => response.json()).then(response => {
+    console.log(response);
+  });
+}
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) == name + '=') {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
 }
 function initializeQuestions(questions) {
   const quizWrapper = document.createElement('div');
@@ -93,6 +123,7 @@ function initializeQuestions(questions) {
     questionBox.className = 'question-box';
     questionBox.id = `question-${index}`;
     questionBox.dataset.question_id = `${index}`;
+    questionBox.dataset.question_type = `${question.Type}`;
     const titleWrapper = document.createElement('div');
     titleWrapper.className = 'question-wrapper';
     const title = document.createElement('div');
@@ -137,6 +168,7 @@ function initializeQuestions(questions) {
       li.dataset.answer_id = `${option[0]}`;
       li.dataset.question_id = `${index}`;
       li.dataset.relation = question.Select;
+      li.dataset.question_type = question.Type;
       li.className = 'option-box__li unselected';
       li.id = `answer-question-${index}`;
       createAnswers(question, li, index, option_index);

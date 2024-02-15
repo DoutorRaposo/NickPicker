@@ -9,6 +9,7 @@ import random
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from .questions import questions
+import json
 
 
 def index(request):
@@ -69,33 +70,77 @@ def search(request):
         context={"movies": queryset, "title": f'Results for "{query}"'},
     )
 
+
 def get_questions(request):
     """This serves as an API response to the JS on the front-end to get all questions"""
     return JsonResponse(questions, safe=False)
 
 
-# Install CORS?
-
-
-# This viewset is for the API to return all the valid titles at /api/titles
-# Valid titles are Released titles that are Movies with Nic Cage as an Actor
-# Another viewser maybe will be required for the Trivia Section
-class TitleViewSet(viewsets.ModelViewSet):
-    queryset = Title.objects.all()
-    serializer_class = TitleSerializer
-    http_method_names = ["get"]
-
-
-# We have to create separate jsons for the serializer url to work?
-class TitleValidViewSet(viewsets.ModelViewSet):
+def results(request):
+    """This view is responsible for getting the data from the quiz and returning a number of recommendations
+    Each question has a "TYPE" so we can identify which type of question is (and also enable the possibility of adding more)
+    And we fork the queryset to each filter by identifying if the question is not set to a FALSE value
+    """
+    # Only via POST
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=304)
+    data = json.loads(request.body)
     queryset = Title.valid()
-    serializer_class = TitleSerializer
-    http_method_names = ["get"]
 
+    # We union every genre filtered version of the queryset, then we intersect with the original queryset.
+    if data["genre"]:
+        initial_queryset = Title.objects.none()
+        for genre in data["genre"]:
+            qs = queryset.filter(genre__id=int(genre))
+            initial_queryset |= qs
 
-# Ambas funcionam, mas qual usar? talvez a função use para search.
-def title_list(request):
-    queryset = Title.valid()
+        queryset = queryset & initial_queryset
+        queryset = queryset.distinct()
+
+    # We filter by answer by only allowing movies release in the decades defined by the response.
+    if data["decade"]:
+        match data["decade"]:
+            case "recent":
+                queryset = queryset.filter(release_date__year__gte="2010")
+            case "00s":
+                queryset = queryset.filter(release_date__year__gte="2000").filter(
+                    release_date__year__lt="2010"
+                )
+            case "90s":
+                queryset = queryset.filter(release_date__year__gte="1990").filter(
+                    release_date__year__lt="2000"
+                )
+            case "80s":
+                queryset = queryset.filter(release_date__year__gte="1980").filter(
+                    release_date__year__lt="1990"
+                )
+    # Filter by type of certification
+    if data["certification"]:
+        match data["certification"]:
+            case "PG":
+                queryset = queryset.filter(certification="PG")
+            case "PG-13":
+                queryset = queryset.filter(certification="PG-13")
+            case "R":
+                queryset = queryset.exclude(
+                    Q(certification="PG-13") | Q(certification="PG")
+                )
+    # This one took a bit: we have to order by the number of matches of keywords in the answer list
+    if data["keywords"]:
+        queryset = queryset.annotate(
+            num_matches=Count("keywords", filter=Q(keywords__pk__in=data["keywords"]))
+        ).order_by("-num_matches")
+
+    # If the user wants to order by popularity, we do it after ordering the keywords
+    if data["popularity"]:
+        queryset = queryset.order_by("-vote_average")
+    
+    # Now we get the serialized version of the queryset to send to the user, maybe restrict how many we send?
     serializer = TitleSerializer(queryset, many=True, context={"request": request})
-    print(request.GET.get("q", "teste"))
-    return JsonResponse(serializer.data, safe=False)
+    return JsonResponse(serializer.data, safe=False, status=200)
+
+class TitleViewSet(viewsets.ModelViewSet):
+    """This view generates all valid titles as JSON, we use this to serialize all data used in the "result from quiz view"""
+    queryset = Title.valid()
+    serializer_class = TitleSerializer
+    http_method_names = ["get"]
