@@ -88,7 +88,6 @@ function getResults(question_total) {
       }
     }
   }
-  console.log(answers_obj);
   let csrftoken = getCookie('csrftoken');
   fetch('results', {
     method: 'POST',
@@ -98,8 +97,133 @@ function getResults(question_total) {
     },
     mode: 'same-origin'
   }).then(response => response.json()).then(response => {
-    console.log(response);
+    document.querySelector('.quiz-wrapper').style.display = 'none';
+    if (response.length !== 0) {
+      generateResults(response);
+    } else {
+      const mainApp = document.querySelector("#app");
+      const resultsWrapper = document.createElement('div');
+      resultsWrapper.className = "quiz-final-wrapper";
+      mainApp.append(resultsWrapper);
+      const resultsDiv = document.createElement('div');
+      resultsDiv.className = "results-wrapper";
+      resultsDiv.id = `no-result`;
+      const resultsHeader = document.createElement('span');
+      resultsHeader.className = "results-wrapper__header";
+      resultsHeader.innerHTML = "Sorry, no results found.";
+      resultsDiv.append(resultsHeader);
+      const resultsText = document.createElement('span');
+      resultsText.className = "results-wrapper__text";
+      resultsText.innerHTML = "Please try again the quiz with different answers combination";
+      resultsDiv.append(resultsText);
+      const button = document.createElement('button');
+      button.className = "btn btn-secondary btn-lg btn-block";
+      button.type = "button";
+      button.id = "result-button";
+      button.innerHTML = 'Retake quiz <i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>';
+      button.addEventListener('click', () => location.reload());
+      resultsDiv.append(button);
+      resultsDiv.style.display = "none";
+      resultsDiv.style.opacity = '0';
+      resultsWrapper.append(resultsDiv);
+      resultsDiv.style.display = "flex";
+      setTimeout(() => {
+        resultsDiv.style.opacity = '1';
+      }, transitionTime);
+    }
   });
+}
+function generateResults(response) {
+  const mainApp = document.querySelector("#app");
+  const resultsWrapper = document.createElement('div');
+  resultsWrapper.className = "quiz-final-wrapper";
+  mainApp.append(resultsWrapper);
+  response.forEach((result, index, array) => {
+    const element = resultCards(result, index, array);
+    resultsWrapper.append(element);
+  });
+  const firstResult = document.querySelector('.results-wrapper');
+  firstResult.style.display = "block";
+  setTimeout(() => {
+    firstResult.style.opacity = '1';
+  }, transitionTime);
+  document.querySelectorAll('#result-button').forEach(element => {
+    element.addEventListener('click', e => {
+      const currentResult = e.target.parentElement;
+      const index = Number(currentResult.dataset.index);
+      currentResult.style.opacity = '0';
+      setTimeout(() => {
+        currentResult.style.display = 'none';
+      }, transitionTime);
+      if (e.target.dataset.last === "true") {
+        location.reload();
+      } else {
+        document.querySelector(`#result-${index + 1}`).style.display = 'block';
+        setTimeout(() => {
+          document.querySelector(`#result-${index + 1}`).style.opacity = '1';
+        }, transitionTime);
+      }
+    });
+  });
+}
+function resultCards(data, index, array) {
+  const resultsDiv = document.createElement('div');
+  resultsDiv.className = "results-wrapper";
+  resultsDiv.id = `result-${index}`;
+  resultsDiv.dataset.index = `${index}`;
+  const resultsHeader = document.createElement('span');
+  resultsHeader.className = "results-wrapper__header";
+  resultsHeader.innerHTML = "Recommended for you:";
+  resultsDiv.append(resultsHeader);
+  const movieInfo = document.createElement('div');
+  movieInfo.className = "results-wrapper__info";
+  const moviePosterDiv = document.createElement('div');
+  moviePosterDiv.className = "results-wrapper__info__image";
+  const moviePosterLink = document.createElement('a');
+  moviePosterLink.href = `/movies/${data.id}`;
+  moviePosterLink.target = "_blank";
+  moviePosterLink.rel = "noopener noreferrer";
+  const moviePosterImg = document.createElement('img');
+  moviePosterImg.src = data.poster_path;
+  moviePosterLink.append(moviePosterImg);
+  moviePosterDiv.append(moviePosterLink);
+  movieInfo.append(moviePosterDiv);
+  const movieContent = document.createElement('div');
+  movieContent.className = "results-wrapper__info__content";
+  const movieTitleWrapper = document.createElement('span');
+  movieTitleWrapper.className = "results-wrapper__info__content__title";
+  const movieTitle = document.createElement('a');
+  movieTitle.className = "results-wrapper__info__content__title__link";
+  movieTitle.innerHTML = data.title;
+  movieTitle.href = `/movies/${data.id}`;
+  movieTitle.target = "_blank";
+  movieTitle.rel = "noopener noreferrer";
+  movieTitleWrapper.append(movieTitle);
+  movieContent.append(movieTitleWrapper);
+  movieInfo.append(movieContent);
+  const movieDescriptionWrapper = document.createElement('div');
+  movieDescriptionWrapper.className = "results-wrapper__info__overview";
+  const movieDescription = document.createElement('span');
+  movieDescription.className = "results-wrapper__info__overview_text";
+  movieDescription.innerHTML = data.overview;
+  movieDescriptionWrapper.append(movieDescription);
+  movieContent.append(movieDescriptionWrapper);
+  resultsDiv.append(movieInfo);
+  const button = document.createElement('button');
+  button.className = "btn btn-secondary btn-lg btn-block";
+  button.type = "button";
+  button.id = "result-button";
+  if (index + 1 === array.length) {
+    button.innerHTML = '<i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>Retake the quiz';
+    button.dataset.last = "true";
+  } else {
+    button.innerHTML = 'Get another recommendation <i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>';
+    button.dataset.last = "false";
+  }
+  resultsDiv.append(button);
+  resultsDiv.style.display = "none";
+  resultsDiv.style.opacity = "0";
+  return resultsDiv;
 }
 function getCookie(name) {
   var cookieValue = null;

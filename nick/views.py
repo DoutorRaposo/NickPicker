@@ -81,6 +81,9 @@ def results(request):
     Each question has a "TYPE" so we can identify which type of question is (and also enable the possibility of adding more)
     And we fork the queryset to each filter by identifying if the question is not set to a FALSE value
     """
+
+    max_results = 15
+
     # Only via POST
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=304)
@@ -134,6 +137,8 @@ def results(request):
     # If the user wants to order by popularity, we do it after ordering the keywords
     if data["popularity"]:
         queryset = queryset.order_by("-vote_average")
+
+    queryset = queryset[:max_results]
     
     # Now we get the serialized version of the queryset to send to the user, maybe restrict how many we send?
     serializer = TitleSerializer(queryset, many=True, context={"request": request})
