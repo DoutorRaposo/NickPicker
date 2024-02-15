@@ -77,6 +77,7 @@ def get_questions(request):
     return JsonResponse(questions, safe=False)
 
 @csrf_exempt
+# To use CSRF, we also need to use HTTPS and I'm testing using local network. Could think of a workaround eventually.
 def results(request):
     """This view is responsible for getting the data from the quiz and returning a number of recommendations
     Each question has a "TYPE" so we can identify which type of question is (and also enable the possibility of adding more)
