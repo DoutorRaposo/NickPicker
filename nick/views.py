@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from .questions import questions
 import json
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -75,7 +76,7 @@ def get_questions(request):
     """This serves as an API response to the JS on the front-end to get all questions"""
     return JsonResponse(questions, safe=False)
 
-
+@csrf_exempt
 def results(request):
     """This view is responsible for getting the data from the quiz and returning a number of recommendations
     Each question has a "TYPE" so we can identify which type of question is (and also enable the possibility of adding more)

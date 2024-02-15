@@ -555,3 +555,9 @@ main {
     color: white;
 
 }
+
+#result-button {
+    & i {
+        margin-right: 5px;
+    }
+}

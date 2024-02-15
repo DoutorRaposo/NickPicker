@@ -210,9 +210,13 @@ function generateResults(response) {
 
   document.querySelectorAll('#result-button').forEach(element => {
     element.addEventListener('click', (e) => {
-      const currentResult = e.target.parentElement;
+      if (e.target.localName === "i") {
+        var currentResult = e.target.parentElement.parentElement;
+      }
+      else {
+        var currentResult = e.target.parentElement;
+      }
       const index = Number(currentResult.dataset.index);
-
       currentResult.style.opacity = '0';
       setTimeout(() => {
         currentResult.style.display = 'none';
@@ -222,10 +226,10 @@ function generateResults(response) {
         location.reload();
       }
       else {
-
-        document.querySelector(`#result-${index + 1}`).style.display = 'block';
+        const nextElement = document.querySelector(`#result-${index + 1}`);
+        nextElement.style.display = 'block';
         setTimeout(() => {
-          document.querySelector(`#result-${index + 1}`).style.opacity = '1';
+          nextElement.style.opacity = '1';
         }, transitionTime);
       }
     });
@@ -297,14 +301,17 @@ function resultCards(data, index, array) {
   button.className = "btn btn-secondary btn-lg btn-block";
   button.type = "button";
   button.id = "result-button";
+  button.dataset.index = `${index}`
 
 
   if (index + 1 === array.length) {
+
     button.innerHTML = '<i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>Retake the quiz';
     button.dataset.last = "true";
 
   }
   else {
+
     button.innerHTML = 'Get another recommendation <i style="font-size:12px" class="fa fa-refresh" aria-hidden="true"></i>';
     button.dataset.last = "false";
   }
