@@ -1,5 +1,5 @@
 # NickPicker
-#### Video Demo: TODO
+#### Video Demo: https://youtu.be/jgnVzCgjPTk
 #### Description:
 
 This is my final project for CS50W. It is a website that serves as a movie picker for Nicolas Cage movies. You answers a few questions and get back a series of recommendations. You can also look up movies in the search bar, see the movie list by genre or check out all movies. Every movie has a personal page with more details.
