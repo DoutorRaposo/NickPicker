@@ -4,9 +4,13 @@
 
 This is my final project for CS50W. It is a website that serves as a movie picker for Nicolas Cage movies. You answers a few questions and get back a series of recommendations. You can also look up movies in the search bar, see the movie list by genre or check out all movies. Every movie has a personal page with more details.
 
-## Distinctiveness and Complexity:
+## Distinctiveness and Complexity
 
-I believe this project is distinct enough from the other exercises in this cours: by using several models, combining server-side rendering (on movie pages, search bar and genre/all set) with client-side rendering (in the test questions and results), I believe it is complex enough to utilize all the knowledge (and more!) provided by the previous projects.
+NickPicker distinguishes itself by offering personalized movie recommendations centered around Nicolas Cage films. Unlike conventional movie databases, NickPicker's quiz-based approach and advanced search functionality provide users with tailored movie suggestions based on their preferences. By seamlessly integrating server-side rendering for movie pages, search bars, and genre categorization with client-side rendering for interactive quizzes, NickPicker ensures an engaging and dynamic user experience.
+
+NickPicker's architecture leverages Django for backend development and JavaScript for frontend interactivity, demonstrating a sophisticated understanding of web development principles. The project's mobile-responsive design enhances usability across various devices, including tablets, smartphones, and desktops. Additionally, NickPicker incorporates Docker for efficient deployment and testing, reflecting its commitment to scalability and efficiency in development workflows.
+
+The project's feature-rich nature, including its personalized quiz, comprehensive search functionality, and seamless integration of backend and frontend technologies, underscores its complexity and technical depth. NickPicker stands as a testament to advanced web application development, offering users a unique and immersive movie recommendation platform that sets it apart from other projects in the CS50W course.
 
 ## Features:
 
@@ -20,17 +24,25 @@ I believe this project is distinct enough from the other exercises in this cours
 
 There are two ways of running: 
 
+### Using Django's built-in server:
+
+1. Clone the repository to your local machine
+2. Install the required Python packages using pip:
+> pip install -r requirements.txt
+3. Run using Django's built-in: sever:
 > python manage.py runserver
->
-> docker-compose up*
+
+### Using Docker Compose:
+
+1. Clone the repository to your local machine
+2. Ensure you have Docker and Compose installed in your system
+3. Run the following command to start NickPicker using Docker Compose:
+> docker compose up
+
 
  After running, you can open the webpage and explore all the features that I listed above. The main feature is the quiz on the main page. Take it and see if you can find a movie to watch!
 
-*By using the dockerfile I provided, which comes with a few details to look for that I explained below.
-
-### Runserver or Docker-compose:
-
-You don't need to use docker necessarily, but I use it to easily be able to check the responsiveness on other devices in my network. Note that I'm using port 10000 because I use the 8000 in my local network for other services. The internal port of the docker is 8000, though, and using address 0.0.0.0. Just be sure to check the settings for allowed hosts if using docker!
+*By using the dockerfile I provided, which comes with a few details to look for that I explained below. You don't need to use docker necessarily, but I use it to easily be able to check the responsiveness on other devices in my network. Note that I'm using port 10000 because I use the 8000 in my local network for other services. The internal port of the docker is 8000, though, and using address 0.0.0.0. Just be sure to check the settings for allowed hosts if using docker!
 
 ### Database restore:
 
